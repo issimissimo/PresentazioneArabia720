@@ -10,9 +10,11 @@ public class SideMenuCtrl : MonoBehaviour
     float yInit;
     float xSize;
     public float openAnimDuration = 1f;
- 
+
     Coroutine _MovePanel;
     bool isOpen;
+
+    public bool hideOnStart = true;
 
 
 
@@ -27,7 +29,8 @@ public class SideMenuCtrl : MonoBehaviour
 
     void Start()
     {
-        HideNow();
+        if (hideOnStart)
+            HideNow();
     }
 
 
@@ -63,7 +66,7 @@ public class SideMenuCtrl : MonoBehaviour
         _MovePanel = StartCoroutine(_Move(initPos, endPos));
     }
 
-    
+
 
     IEnumerator _Move(Vector2 initPos, Vector2 endPos)
     {

@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public Transform chaptersContainer;
     public CanvasFader blackPanel;
+
+    [HideInInspector]
     public List<Chapter> chapters;
+    public UiManager uiManager;
     int chapterNumber = 0;
     public static GameManager instance;
 
@@ -28,7 +31,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PlayAll();
+        uiManager.SetupMenu(chapters);
+        // PlayAll();
     }
 
 
