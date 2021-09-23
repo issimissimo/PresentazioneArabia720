@@ -67,19 +67,11 @@ public class UiManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && uiElementName != null)
         {
-            // foreach (PanelMenuChapterCtrl panel in panelMenuChapterCtrls)
-            // {
-            //     if (panel.prefabName == uiElementName)
-            //     {
-            //         // panel.SetSelected(() =>
-            //         // {
-            //         //     panel.PlayChapter();
-            //         // });
-            //         panel.PlayChapter();
-            //     }
-            // }
             panel = GetPanelByName(uiElementName);
             panel.PlayChapter();
+
+            /// close menu
+            SideMenuCtrl.instance.Toggle();
         }
     }
 

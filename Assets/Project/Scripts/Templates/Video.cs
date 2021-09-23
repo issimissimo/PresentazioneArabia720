@@ -8,25 +8,84 @@ public class Video : MonoBehaviour
 {
     VideoPlayer videoPlayer;
     Coroutine PlayCoroutine;
+    Action onVideoFinishedCallback;
+    bool isPlaying;
 
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
     }
 
-    void Start()
+    private void OnEnable()
     {
-
+        VideoPlayerCtrl.instance.OnPLayEvent += OnPlayFromUI;
+        VideoPlayerCtrl.instance.OnPauseEvent += OnPauseFromUI;
+        VideoPlayerCtrl.instance.OnStartSeekEvent += OnStartSeekFromUI;
+        VideoPlayerCtrl.instance.OnSeekEvent += OnSeekFromUI;
+        VideoPlayerCtrl.instance.OnEndSeekEvent += OnEndSeekFromUI;
+        videoPlayer.loopPointReached += OnVideoFinished;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
+    private void OnDisable()
+    {
+        VideoPlayerCtrl.instance.OnPLayEvent -= OnPlayFromUI;
+        VideoPlayerCtrl.instance.OnPauseEvent -= OnPauseFromUI;
+        VideoPlayerCtrl.instance.OnStartSeekEvent -= OnStartSeekFromUI;
+        VideoPlayerCtrl.instance.OnSeekEvent -= OnSeekFromUI;
+        VideoPlayerCtrl.instance.OnEndSeekEvent -= OnEndSeekFromUI;
+        videoPlayer.loopPointReached -= OnVideoFinished;
     }
+
+    private void Update()
+    {
+        /// UI
+        if (videoPlayer.isPrepared && videoPlayer.isPlaying)
+        {
+            float seekValue = Mathf.InverseLerp(0, (float)videoPlayer.length, (float)videoPlayer.time);
+            VideoPlayerCtrl.instance.OnSeeking(seekValue);
+        }
+    }
+
+    private void OnVideoFinished(VideoPlayer vp)
+    {
+        print("END");
+        isPlaying = false;
+        if (onVideoFinishedCallback != null) onVideoFinishedCallback();
+    }
+
+    private void OnPlayFromUI()
+    {
+        videoPlayer.Play();
+    }
+
+    private void OnPauseFromUI()
+    {
+        videoPlayer.Pause();
+    }
+
+    private void OnStartSeekFromUI()
+    {
+        isPlaying = videoPlayer.isPlaying ? true : false;
+        if (isPlaying) videoPlayer.Pause();
+    }
+
+    private void OnSeekFromUI(float val)
+    {
+        float frame = Mathf.Lerp(0, (float)videoPlayer.frameCount, val);
+        videoPlayer.frame = (int)frame;
+    }
+
+    private void OnEndSeekFromUI()
+    {
+        if (isPlaying) videoPlayer.Play();
+    }
+
 
     public void Play(Action callback)
     {
+        onVideoFinishedCallback = callback;
+
         if (PlayCoroutine != null)
         {
             StopCoroutine(PlayCoroutine);
@@ -52,7 +111,7 @@ public class Video : MonoBehaviour
     {
         /// UI
         VideoPlayerCtrl.instance.OnPlay();
-        
+
         if (videoPlayer.isPlaying)
         {
             videoPlayer.Stop();
@@ -65,26 +124,26 @@ public class Video : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        print(videoPlayer.length);
+        // print(videoPlayer.length);
 
         videoPlayer.frame = 0;
         videoPlayer.Play();
 
 
-        while (videoPlayer.isPlaying)
-        {
-            /// UI
-            float seekValue = Mathf.InverseLerp(0, (float)videoPlayer.length, (float)videoPlayer.time);
-            VideoPlayerCtrl.instance.OnSeeking(seekValue);
+        // while (videoPlayer.isPlaying)
+        // {
+        //     /// UI
+        //     float seekValue = Mathf.InverseLerp(0, (float)videoPlayer.length, (float)videoPlayer.time);
+        //     VideoPlayerCtrl.instance.OnSeeking(seekValue);
 
-            yield return new WaitForEndOfFrame();
-        }
+        //     yield return new WaitForEndOfFrame();
+        // }
 
         PlayCoroutine = null;
 
-        if (callback != null) callback();
+        // if (callback != null) callback();
 
-        /// UI
-        VideoPlayerCtrl.instance.OnPause();
+        // /// UI
+        // VideoPlayerCtrl.instance.OnPause();
     }
 }

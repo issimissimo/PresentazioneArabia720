@@ -16,10 +16,12 @@ public class SideMenuCtrl : MonoBehaviour
 
     public bool hideOnStart = true;
 
-
+    public static SideMenuCtrl instance;
 
     private void Awake()
     {
+        instance = this;
+
         rect = GetComponent<RectTransform>();
         xInit = rect.anchoredPosition.x;
         yInit = rect.anchoredPosition.y;
