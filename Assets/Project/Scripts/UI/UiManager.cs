@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class UiManager : MonoBehaviour
 {
@@ -18,9 +17,6 @@ public class UiManager : MonoBehaviour
     private PanelMenuChapterCtrl panel;
 
     List<PanelMenuChapterCtrl> panelMenuChapterCtrls = new List<PanelMenuChapterCtrl>();
-
-    // public static event Action pp;
-
 
 
     PanelMenuChapterCtrl GetPanelByName(string name)
@@ -75,7 +71,6 @@ public class UiManager : MonoBehaviour
         }
     }
 
-
     public void SelectPanel(int number)
     {
         panel = GetPanelByNumber(number);
@@ -91,8 +86,6 @@ public class UiManager : MonoBehaviour
             panel.SetUnselected();
         }
     }
-
-
 
     public void SetupMenu(List<Chapter> chapters)
     {
