@@ -12,7 +12,7 @@ public class PanelMenuChapterCtrl : MonoBehaviour
     [HideInInspector]
     public string prefabName;
     private int prefabNumber;
-    private bool isOver;
+    // private bool isOver;
     private bool isClicked;
     private Image backgroundImage;
 
@@ -52,18 +52,17 @@ public class PanelMenuChapterCtrl : MonoBehaviour
         }
     }
 
-    public void SetSelected(Action callback = null)
+    public void SetSelected()
     {
         if (!isClicked)
         {
             isClicked = true;
             // print("MOUSE CLICK: " + prefabName + " - " + prefabNumber);
             backgroundImage.color = clickColor;
-            if (callback != null) callback();
         }
     }
 
-    public void SetUnselected(Action callback = null)
+    public void SetUnselected()
     {
         if (isClicked)
         {

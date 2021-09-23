@@ -46,6 +46,10 @@ public class GameManager : MonoBehaviour
     public void PlayChapter(int number)
     {
         Debug.Log("PLAYCHAPTER: " + number);
+
+        uiManager.UnselectPanel();
+        uiManager.SelectPanel(number);
+
         /// Stop previous playing chapter (if any...)
         if (chapterNumber >= 0)
         {

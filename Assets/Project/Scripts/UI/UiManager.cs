@@ -9,30 +9,31 @@ public class UiManager : MonoBehaviour
     public GameObject chapterMenuPrefab;
 
     string uiElementName;
+    string panelSelectedName;
     private PanelMenuChapterCtrl panel;
 
     List<PanelMenuChapterCtrl> panelMenuChapterCtrls = new List<PanelMenuChapterCtrl>();
 
     // public static event Action pp;
 
-    void Start()
-    {
-
-    }
 
 
-
-    PanelMenuChapterCtrl GetPanel()
+    PanelMenuChapterCtrl GetPanelByName(string name)
     {
         PanelMenuChapterCtrl _panel = null;
         foreach (PanelMenuChapterCtrl __panel in panelMenuChapterCtrls)
         {
-            if (__panel.prefabName == uiElementName)
+            if (__panel.prefabName == name)
             {
                 _panel = __panel;
             }
         }
         return _panel;
+    }
+
+    PanelMenuChapterCtrl GetPanelByNumber(int number)
+    {
+        return panelMenuChapterCtrls[number];
     }
 
 
@@ -44,16 +45,8 @@ public class UiManager : MonoBehaviour
         {
             if (name != uiElementName)
             {
-                /// turn On the new one
                 uiElementName = name;
-                // foreach (PanelMenuChapterCtrl panel in panelMenuChapterCtrls)
-                // {
-                //     if (panel.prefabName == uiElementName)
-                //     {
-                //         panel.SetHighlight();
-                //     }
-                // }
-                panel = GetPanel();
+                panel = GetPanelByName(uiElementName);
                 panel.SetHighlight();
             }
         }
@@ -61,14 +54,7 @@ public class UiManager : MonoBehaviour
         {
             if (uiElementName != null)
             {
-                // foreach (PanelMenuChapterCtrl panel in panelMenuChapterCtrls)
-                // {
-                //     if (panel.prefabName == uiElementName)
-                //     {
-                //         panel.SetDefault();
-                //     }
-                // }
-                panel = GetPanel();
+                panel = GetPanelByName(uiElementName);
                 panel.SetDefault();
                 uiElementName = null;
             }
@@ -87,8 +73,25 @@ public class UiManager : MonoBehaviour
             //         panel.PlayChapter();
             //     }
             // }
-            panel = GetPanel();
+            panel = GetPanelByName(uiElementName);
             panel.PlayChapter();
+        }
+    }
+
+
+    public void SelectPanel(int number)
+    {
+        panel = GetPanelByNumber(number);
+        panel.SetSelected();
+        panelSelectedName = panel.prefabName;
+    }
+
+    public void UnselectPanel()
+    {
+        if (panelSelectedName != null)
+        {
+            panel = GetPanelByName(panelSelectedName);
+            panel.SetUnselected();
         }
     }
 
