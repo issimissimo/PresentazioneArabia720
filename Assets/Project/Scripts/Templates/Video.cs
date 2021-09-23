@@ -128,16 +128,24 @@ public class Video : MonoBehaviour
 
     private void OnSeekFromUI(float val)
     {
-        float frame = Mathf.Lerp(0, (float)videoPlayer.frameCount, val);
-        videoPlayer.frame = (int)frame;
+        /// videoplayer seek
+        float time = Mathf.Lerp(0, (float)videoPlayer.length, val);
+        videoPlayer.time = time;
 
-        /// qui devo fare il seek dell' audiosource!!!!
-        audioSource.time = Mathf.Lerp(0, audioSource.clip.length, val);
+        /// audiosource seek
+        audioSource.time = Mathf.Lerp(0, (float)videoPlayer.length, val);
     }
 
     private void OnEndSeekFromUI()
     {
-        if (isPlaying) OnPlayFromUI();
+        /// qui dobbiamo aspettare un attimo,
+        /// se no abbiamo lo scatto brutto dello slider...
+        if (isPlaying) StartCoroutine(OnEndSeekFromUICoroutine());
+    }
+
+    IEnumerator OnEndSeekFromUICoroutine(){
+        yield return new WaitForSeconds(0.2f);
+        OnPlayFromUI();
     }
 
 
