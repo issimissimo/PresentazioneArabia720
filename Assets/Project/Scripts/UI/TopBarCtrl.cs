@@ -9,26 +9,30 @@ public class TopBarCtrl : MonoBehaviour
     bool mouseIsOver;
     CanvasGroup canvasGroup;
     Coroutine ToggleCoroutine;
+    string gameobjectName;
+    public bool hideOnStart = true;
     public float openAnimDuration = 0.5f;
 
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        gameobjectName = gameObject.name;
     }
 
     void Start()
     {
-        canvasGroup.alpha = 0;
+        if (hideOnStart)
+            canvasGroup.alpha = 0;
     }
 
     void Update()
     {
-        if (!mouseIsOver && EventSystem.current.IsPointerOverGameObject())
+        if (!mouseIsOver && Utils.IsPointerOverUI(gameobjectName))
         {
             mouseIsOver = true;
             Toggle();
         }
-        else if (mouseIsOver && !EventSystem.current.IsPointerOverGameObject())
+        else if (mouseIsOver && !Utils.IsPointerOverUI(gameobjectName))
         {
             mouseIsOver = false;
             Toggle();

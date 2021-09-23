@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     private int chapterNumber = -1;
     public static GameManager instance;
+
+    // [HideInInspector]
+    public bool speakerIsOn = true;
+
+    public static event Action<bool> OnSpeakerToggleEvent;
 
 
     private void Awake()
@@ -71,6 +77,12 @@ public class GameManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void ToggleSpeaker()
+    {
+        speakerIsOn = !speakerIsOn;
+        if (OnSpeakerToggleEvent != null) OnSpeakerToggleEvent(speakerIsOn);
     }
 
 
