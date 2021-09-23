@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class UiManager : MonoBehaviour
 {
     public Transform menuContainer;
     public GameObject chapterMenuPrefab;
+    public Button previousButton;
+    public Button nextButton;
 
     string uiElementName;
     string panelSelectedName;

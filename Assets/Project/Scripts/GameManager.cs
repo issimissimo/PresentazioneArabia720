@@ -43,10 +43,8 @@ public class GameManager : MonoBehaviour
         PlayChapter(0);
     }
 
-    public void PlayChapter(int number)
+    public void PlayChapter(int number, bool lastChild = false)
     {
-        Debug.Log("PLAYCHAPTER: " + number);
-
         uiManager.UnselectPanel();
         uiManager.SelectPanel(number);
 
@@ -57,7 +55,7 @@ public class GameManager : MonoBehaviour
         }
 
         chapterNumber = number;
-        chapters[chapterNumber].PlayAll(GoNextChapter);
+        chapters[chapterNumber].PlayAll(chapterNumber, lastChild, GoNextChapter);
     }
 
     public void GoNextChapterChild()
@@ -85,6 +83,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            chapterNumber--;
             print("END OF PRESENTATION!");
         }
     }
@@ -94,7 +93,7 @@ public class GameManager : MonoBehaviour
         chapterNumber--;
         if (chapterNumber >= 0)
         {
-            PlayChapter(chapterNumber);
+            PlayChapter(chapterNumber, true);
         }
         else
         {

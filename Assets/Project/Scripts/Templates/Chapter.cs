@@ -7,6 +7,7 @@ public class Chapter : MonoBehaviour
 {
     [HideInInspector]
     public List<GameObject> childs;
+    int chapterNumber;
     int childNumber = 0;
     Video video;
     Action onEndCallback;
@@ -18,30 +19,47 @@ public class Chapter : MonoBehaviour
             GameObject child = transform.GetChild(i).gameObject;
             childs.Add(child);
             child.SetActive(false);
-            // GameObject child = transform.GetChild(i).gameObject;
-            // if (child.GetComponent<Video>() != null){
-            //     videos.Add(child.GetComponent<Video>());
-            // }
         }
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
 
-    public void PlayAll(Action callback)
+
+    public void PlayAll(int number, bool lastChild, Action callback)
     {
+        chapterNumber = number;
         onEndCallback = callback;
-        childNumber = 0;
-        Play();
+        childNumber = lastChild ? childs.Count - 1 : 0;
+        PlayChild();
     }
 
-    public void Play()
+    public void PlayChild()
     {
+        /// set UI buttons
+        GameManager.instance.uiManager.previousButton.interactable =
+            chapterNumber == 0 && childNumber == 0 ? false : true;
+
+        GameManager.instance.uiManager.nextButton.interactable =
+            chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1 ? false : true;
+
+        //  if is first
+        // if (chapterNumber == 0 && childNumber == 0)
+        // {
+        //     GameManager.instance.uiManager.previousButton.interactable = false;
+        // }
+        // else
+        // {
+        //     GameManager.instance.uiManager.previousButton.interactable = true;
+        // }
+        // if (chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1)
+        // {
+        //     GameManager.instance.uiManager.nextButton.interactable = false;
+        // }
+        // else
+        // {
+        //     GameManager.instance.uiManager.nextButton.interactable = true;
+        // }
+
+
         childs[childNumber].SetActive(true);
 
         /// if is video...
@@ -79,7 +97,7 @@ public class Chapter : MonoBehaviour
         childNumber++;
         if (childNumber <= childs.Count - 1)
         {
-            Play();
+            PlayChild();
         }
         else
         {
@@ -99,7 +117,7 @@ public class Chapter : MonoBehaviour
         childNumber--;
         if (childNumber >= 0)
         {
-            Play();
+            PlayChild();
         }
         else
         {
