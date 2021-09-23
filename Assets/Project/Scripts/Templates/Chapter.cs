@@ -44,6 +44,7 @@ public class Chapter : MonoBehaviour
     {
         childs[childNumber].SetActive(true);
 
+        /// if is video...
         if (childs[childNumber].GetComponent<Video>() != null)
         {
             video = childs[childNumber].GetComponent<Video>();
@@ -51,12 +52,29 @@ public class Chapter : MonoBehaviour
         }
     }
 
+
+    public void Stop()
+    {
+        if (video != null)
+        {
+            video.Stop();
+            video = null;
+
+            print("Stop: " + gameObject.name + " - " + childNumber);
+            childs[childNumber].SetActive(false);
+        }
+
+    }
+
+
     public void GoNextChild()
     {
-        if (video != null){
-            video.Stop();
-        }
-        childs[childNumber].SetActive(false);
+        // if (video != null){
+        //     video.Stop();
+        // }
+        // childs[childNumber].SetActive(false);
+
+        Stop();
 
         childNumber++;
         if (childNumber <= childs.Count - 1)
@@ -71,11 +89,13 @@ public class Chapter : MonoBehaviour
 
     public void GoPreviousChild(Action onStartFoundcallback)
     {
-        if (video != null){
-            video.Stop();
-        }
-        childs[childNumber].SetActive(false);
-        
+        // if (video != null){
+        //     video.Stop();
+        // }
+        // childs[childNumber].SetActive(false);
+
+        Stop();
+
         childNumber--;
         if (childNumber >= 0)
         {

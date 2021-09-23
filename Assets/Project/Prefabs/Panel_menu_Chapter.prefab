@@ -133,6 +133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   englishTitle: {fileID: 2916371875898383469}
+  prefabName: 
+  overColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  clickColor: {r: 0, g: 0.41646522, b: 0.6886792, a: 1}
 --- !u!1 &2494655237098156495
 GameObject:
   m_ObjectHideFlags: 0

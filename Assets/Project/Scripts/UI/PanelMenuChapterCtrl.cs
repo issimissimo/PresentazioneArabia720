@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-// using UnityEngine.EventSystems;
+using System;
 
 public class PanelMenuChapterCtrl : MonoBehaviour
 {
@@ -11,25 +11,71 @@ public class PanelMenuChapterCtrl : MonoBehaviour
 
     [HideInInspector]
     public string prefabName;
+    private int prefabNumber;
     private bool isOver;
+    private bool isClicked;
+    private Image backgroundImage;
 
-    public void Setup(Chapter chapter)
+    private Color defaultColor;
+    public Color overColor;
+    public Color clickColor;
+
+    private void Awake()
+    {
+        backgroundImage = GetComponent<Image>();
+        defaultColor = backgroundImage.color;
+    }
+
+    public void Setup(Chapter chapter, int number)
     {
         prefabName = chapter.gameObject.name;
         englishTitle.text = prefabName;
         gameObject.name = prefabName;
+        prefabNumber = number;
     }
 
-    public void MouseOver()
+    public void SetHighlight()
     {
-        print("MOUSE OVER: " + prefabName);
+        if (!isClicked)
+        {
+            // print("MOUSE OVER: " + prefabName);
+            backgroundImage.color = overColor;
+        }
     }
 
-    public void MouseExit()
+    public void SetDefault()
     {
-        print("MOUSE EXIT: " + prefabName);
+        if (!isClicked)
+        {
+            // print("MOUSE EXIT: " + prefabName);
+            backgroundImage.color = defaultColor;
+        }
     }
 
+    public void SetSelected(Action callback = null)
+    {
+        if (!isClicked)
+        {
+            isClicked = true;
+            // print("MOUSE CLICK: " + prefabName + " - " + prefabNumber);
+            backgroundImage.color = clickColor;
+            if (callback != null) callback();
+        }
+    }
+
+    public void SetUnselected(Action callback = null)
+    {
+        if (isClicked)
+        {
+            isClicked = false;
+            SetDefault();
+        }
+    }
+
+    public void PlayChapter()
+    {
+        GameManager.instance.PlayChapter(prefabNumber);
+    }
 
 
 }

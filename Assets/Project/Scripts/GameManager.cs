@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<Chapter> chapters;
     public UiManager uiManager;
-    int chapterNumber = 0;
+
+    [HideInInspector]
+    private int chapterNumber = -1;
     public static GameManager instance;
 
 
@@ -32,18 +34,25 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         uiManager.SetupMenu(chapters);
-        // PlayAll();
+        PlayAll();
     }
 
 
     public void PlayAll()
     {
-        chapterNumber = 0;
-        PlayChapter();
+        PlayChapter(0);
     }
 
-    public void PlayChapter()
+    public void PlayChapter(int number)
     {
+        Debug.Log("PLAYCHAPTER: " + number);
+        /// Stop previous playing chapter (if any...)
+        if (chapterNumber >= 0)
+        {
+            chapters[chapterNumber].Stop();
+        }
+
+        chapterNumber = number;
         chapters[chapterNumber].PlayAll(GoNextChapter);
     }
 
@@ -68,7 +77,7 @@ public class GameManager : MonoBehaviour
         chapterNumber++;
         if (chapterNumber <= chapters.Count - 1)
         {
-            PlayChapter();
+            PlayChapter(chapterNumber);
         }
         else
         {
@@ -81,7 +90,7 @@ public class GameManager : MonoBehaviour
         chapterNumber--;
         if (chapterNumber >= 0)
         {
-            PlayChapter();
+            PlayChapter(chapterNumber);
         }
         else
         {
