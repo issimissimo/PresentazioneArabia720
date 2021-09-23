@@ -8,7 +8,7 @@ using System;
 
 public class ToggleButton : MonoBehaviour
 {
-    public Sprite imageOn;
+    private Sprite imageOn;
     public Sprite ImageOff;
 
     [Serializable]
@@ -23,6 +23,7 @@ public class ToggleButton : MonoBehaviour
     {
         button = GetComponent<Button>();
         image = GetComponent<Image>();
+        imageOn = image.sprite;
     }
 
     // Start is called before the first frame update

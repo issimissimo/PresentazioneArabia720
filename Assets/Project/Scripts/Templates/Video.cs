@@ -24,11 +24,11 @@ public class Video : MonoBehaviour
 
     private void OnEnable()
     {
-        VideoPlayerCtrl.instance.OnPLayEvent += OnPlayFromUI;
-        VideoPlayerCtrl.instance.OnPauseEvent += OnPauseFromUI;
-        VideoPlayerCtrl.instance.OnStartSeekEvent += OnStartSeekFromUI;
-        VideoPlayerCtrl.instance.OnSeekEvent += OnSeekFromUI;
-        VideoPlayerCtrl.instance.OnEndSeekEvent += OnEndSeekFromUI;
+        VideoPlayerCtrl.OnPLayEvent += OnPlayFromUI;
+        VideoPlayerCtrl.OnPauseEvent += OnPauseFromUI;
+        VideoPlayerCtrl.OnStartSeekEvent += OnStartSeekFromUI;
+        VideoPlayerCtrl.OnSeekEvent += OnSeekFromUI;
+        VideoPlayerCtrl.OnEndSeekEvent += OnEndSeekFromUI;
         videoPlayer.loopPointReached += OnVideoFinished;
         GameManager.OnSpeakerToggleEvent += OnSpeakerToggle;
     }
@@ -36,11 +36,11 @@ public class Video : MonoBehaviour
 
     private void OnDisable()
     {
-        VideoPlayerCtrl.instance.OnPLayEvent -= OnPlayFromUI;
-        VideoPlayerCtrl.instance.OnPauseEvent -= OnPauseFromUI;
-        VideoPlayerCtrl.instance.OnStartSeekEvent -= OnStartSeekFromUI;
-        VideoPlayerCtrl.instance.OnSeekEvent -= OnSeekFromUI;
-        VideoPlayerCtrl.instance.OnEndSeekEvent -= OnEndSeekFromUI;
+        VideoPlayerCtrl.OnPLayEvent -= OnPlayFromUI;
+        VideoPlayerCtrl.OnPauseEvent -= OnPauseFromUI;
+        VideoPlayerCtrl.OnStartSeekEvent -= OnStartSeekFromUI;
+        VideoPlayerCtrl.OnSeekEvent -= OnSeekFromUI;
+        VideoPlayerCtrl.OnEndSeekEvent -= OnEndSeekFromUI;
         videoPlayer.loopPointReached -= OnVideoFinished;
         GameManager.OnSpeakerToggleEvent -= OnSpeakerToggle;
     }
@@ -66,19 +66,26 @@ public class Video : MonoBehaviour
     }
 
 
-    private void PlayAudioClip()
+    private void LoadAudioClip()
     {
         if (audioClip == null)
         {
             StartCoroutine(GetAudioClip(() =>
             {
-                audioSource.Play();
+                PlayAudioClip();
             }));
         }
         else
         {
-            audioSource.Play();
+            PlayAudioClip();
         }
+    }
+
+
+    private void PlayAudioClip()
+    {
+        audioSource.time = 0;
+        audioSource.Play();
     }
 
 
@@ -104,28 +111,33 @@ public class Video : MonoBehaviour
     private void OnPlayFromUI()
     {
         videoPlayer.Play();
+        audioSource.Play();
     }
 
     private void OnPauseFromUI()
     {
         videoPlayer.Pause();
+        audioSource.Pause();
     }
 
     private void OnStartSeekFromUI()
     {
         isPlaying = videoPlayer.isPlaying ? true : false;
-        if (isPlaying) videoPlayer.Pause();
+        if (isPlaying) OnPauseFromUI();
     }
 
     private void OnSeekFromUI(float val)
     {
         float frame = Mathf.Lerp(0, (float)videoPlayer.frameCount, val);
         videoPlayer.frame = (int)frame;
+
+        /// qui devo fare il seek dell' audiosource!!!!
+        audioSource.time = Mathf.Lerp(0, audioSource.clip.length, val);
     }
 
     private void OnEndSeekFromUI()
     {
-        if (isPlaying) videoPlayer.Play();
+        if (isPlaying) OnPlayFromUI();
     }
 
 
@@ -135,7 +147,7 @@ public class Video : MonoBehaviour
 
         if (!string.IsNullOrEmpty(speakerAudioName))
         {
-            PlayAudioClip();
+            LoadAudioClip();
         }
 
         onVideoFinishedCallback = callback;

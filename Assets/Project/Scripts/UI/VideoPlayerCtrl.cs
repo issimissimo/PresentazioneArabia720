@@ -11,11 +11,11 @@ public class VideoPlayerCtrl : MonoBehaviour
     public Button pauseButton;
     public Slider seekSlider;
 
-    public event Action OnPLayEvent;
-    public event Action OnPauseEvent;
-    public event Action OnStartSeekEvent;
-    public event Action<float> OnSeekEvent;
-    public event Action OnEndSeekEvent;
+    public static event Action OnPLayEvent;
+    public static event Action OnPauseEvent;
+    public static event Action OnStartSeekEvent;
+    public static event Action<float> OnSeekEvent;
+    public static event Action OnEndSeekEvent;
 
     public static VideoPlayerCtrl instance;
 
