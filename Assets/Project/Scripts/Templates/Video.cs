@@ -50,12 +50,14 @@ public class Video : MonoBehaviour
 
     private IEnumerator _Play(Action callback)
     {
+        /// UI
+        VideoPlayerCtrl.instance.OnPlay();
+        
         if (videoPlayer.isPlaying)
         {
             videoPlayer.Stop();
         }
 
-        // videoPlayer.url = fileUrl;
         videoPlayer.Prepare();
 
         while (!videoPlayer.isPrepared)
@@ -63,22 +65,26 @@ public class Video : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+        print(videoPlayer.length);
+
         videoPlayer.frame = 0;
         videoPlayer.Play();
-
-        // yield return new WaitForSeconds(0.1f);
-
 
 
         while (videoPlayer.isPlaying)
         {
+            /// UI
+            float seekValue = Mathf.InverseLerp(0, (float)videoPlayer.length, (float)videoPlayer.time);
+            VideoPlayerCtrl.instance.OnSeeking(seekValue);
+
             yield return new WaitForEndOfFrame();
         }
 
         PlayCoroutine = null;
 
         if (callback != null) callback();
+
+        /// UI
+        VideoPlayerCtrl.instance.OnPause();
     }
-
-
 }

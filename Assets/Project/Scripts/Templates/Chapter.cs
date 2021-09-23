@@ -41,32 +41,20 @@ public class Chapter : MonoBehaviour
         GameManager.instance.uiManager.nextButton.interactable =
             chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1 ? false : true;
 
-        //  if is first
-        // if (chapterNumber == 0 && childNumber == 0)
-        // {
-        //     GameManager.instance.uiManager.previousButton.interactable = false;
-        // }
-        // else
-        // {
-        //     GameManager.instance.uiManager.previousButton.interactable = true;
-        // }
-        // if (chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1)
-        // {
-        //     GameManager.instance.uiManager.nextButton.interactable = false;
-        // }
-        // else
-        // {
-        //     GameManager.instance.uiManager.nextButton.interactable = true;
-        // }
-
-
         childs[childNumber].SetActive(true);
 
-        /// if is video...
+        /// if the child is video...
         if (childs[childNumber].GetComponent<Video>() != null)
         {
+            GameManager.instance.uiManager.videoPlayerControls.SetActive(true);
+
             video = childs[childNumber].GetComponent<Video>();
             video.Play(GoNextChild);
+        }
+        /// if not video...
+        else
+        {
+            GameManager.instance.uiManager.videoPlayerControls.SetActive(false);
         }
     }
 
@@ -78,7 +66,7 @@ public class Chapter : MonoBehaviour
             video.Stop();
             video = null;
 
-            print("Stop: " + gameObject.name + " - " + childNumber);
+            // print("Stop: " + gameObject.name + " - " + childNumber);
             childs[childNumber].SetActive(false);
         }
 
@@ -87,11 +75,6 @@ public class Chapter : MonoBehaviour
 
     public void GoNextChild()
     {
-        // if (video != null){
-        //     video.Stop();
-        // }
-        // childs[childNumber].SetActive(false);
-
         Stop();
 
         childNumber++;
@@ -107,11 +90,6 @@ public class Chapter : MonoBehaviour
 
     public void GoPreviousChild(Action onStartFoundcallback)
     {
-        // if (video != null){
-        //     video.Stop();
-        // }
-        // childs[childNumber].SetActive(false);
-
         Stop();
 
         childNumber--;

@@ -11,6 +11,8 @@ public class UiManager : MonoBehaviour
     public Button previousButton;
     public Button nextButton;
 
+    public GameObject videoPlayerControls;
+
     string uiElementName;
     string panelSelectedName;
     private PanelMenuChapterCtrl panel;
