@@ -8,7 +8,8 @@ public class Chapter : MonoBehaviour
     [HideInInspector]
     public List<GameObject> childs;
     int chapterNumber;
-    int childNumber = 0;
+    int childNumber;
+    int oldChildNumber;
     Video video;
     Picture picture;
     Action onEndCallback;
@@ -33,14 +34,25 @@ public class Chapter : MonoBehaviour
         PlayChild();
     }
 
-    
-    public void PlayChild(int _chapterNumber, int _childNumber, Action callback){
+
+    public void PlayChild(int _chapterNumber, int _childNumber, Action callback)
+    {
         chapterNumber = _chapterNumber;
+        oldChildNumber = childNumber;
         childNumber = _childNumber;
         onEndCallback = callback;
 
+        // print("PLAYCHILD " + childNumber + " - OLD: " + oldChildNumber);
 
 
+        BlackPanel.instance.FadeIn(() =>
+        {
+            Stop();
+
+
+            PlayChild();
+
+        });
 
         // PlayChild();
     }
@@ -92,14 +104,16 @@ public class Chapter : MonoBehaviour
     {
         if (video != null)
         {
+            print(gameObject.name +  " --> STOP CHILD: " + oldChildNumber);
             video.Stop();
             video = null;
-            childs[childNumber].SetActive(false);
+            childs[oldChildNumber].SetActive(false);
         }
         else if (picture != null)
         {
+            print(gameObject.name +  " --> STOP CHILD: " + oldChildNumber);
             picture = null;
-            childs[childNumber].SetActive(false);
+            childs[oldChildNumber].SetActive(false);
         }
     }
 
@@ -111,24 +125,34 @@ public class Chapter : MonoBehaviour
 
         if (!GameManager.instance.playAuto && !forced) return;
 
-        BlackPanel.instance.FadeIn(() =>
-        {
-            Stop();
+        // BlackPanel.instance.FadeIn(() =>
+        // {
+        //     Stop();
 
-            childNumber++;
-            if (childNumber <= childs.Count - 1)
-            {
-                // PlayChild();
-                /// we have to call the function from GameManager
-                /// to highlight the menu panels...
-                GameManager.instance.PlayChild(chapterNumber, childNumber);
-            }
-            else
-            {
-                // print("onEndCallback");
-                onEndCallback();
-            }
-        });
+        //     childNumber++;
+        //     if (childNumber <= childs.Count - 1)
+        //     {
+        //         // PlayChild();
+        //         /// we have to call the function from GameManager
+        //         /// to highlight the menu panels...
+        //         GameManager.instance.PlayChild(chapterNumber, childNumber);
+        //     }
+        //     else
+        //     {
+        //         // print("onEndCallback");
+        //         onEndCallback();
+        //     }
+        // });
+        if (childNumber + 1 <= childs.Count - 1)
+        {
+            GameManager.instance.PlayChild(chapterNumber, childNumber + 1);
+        }
+        else
+        {
+            print("FINITO IL CHAPTER, PASSO A QUELLO SUCCESSIVO...");
+            oldChildNumber ++;
+            onEndCallback();
+        }
     }
 
 
@@ -137,22 +161,31 @@ public class Chapter : MonoBehaviour
     {
         if (chapterNumber == 0 && childNumber == 0) return;
 
-        BlackPanel.instance.FadeIn(() =>
-        {
-            Stop();
+        // BlackPanel.instance.FadeIn(() =>
+        // {
+        //     Stop();
 
-            childNumber--;
-            if (childNumber >= 0)
-            {
-                // PlayChild();
-                /// we have to call the function from GameManager
-                /// to highlight the menu panels...
-                GameManager.instance.PlayChild(chapterNumber, childNumber);
-            }
-            else
-            {
-                onStartFoundcallback();
-            }
-        });
+        //     childNumber--;
+        //     if (childNumber >= 0)
+        //     {
+        //         // PlayChild();
+        //         /// we have to call the function from GameManager
+        //         /// to highlight the menu panels...
+        //         GameManager.instance.PlayChild(chapterNumber, childNumber);
+        //     }
+        //     else
+        //     {
+        //         onStartFoundcallback();
+        //     }
+        // });
+        if (childNumber - 1 >= 0)
+        {
+            GameManager.instance.PlayChild(chapterNumber, childNumber - 1);
+        }
+        else
+        {
+            oldChildNumber --;
+            onStartFoundcallback();
+        }
     }
 }

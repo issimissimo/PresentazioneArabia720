@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     private int chapterNumber = -1;
+    private int oldChapterNumber = -1;
+    private int childNumber = -1;
+    private int oldChildNumber = -1;
     public static GameManager instance;
 
     [HideInInspector]
@@ -90,17 +93,22 @@ public class GameManager : MonoBehaviour
 
     public void PlayChild(int _chapterNumber, int _childNumber)
     {
-
+        print("GAME MANAGER ----> PLAY CHILD");
         /// Stop previous playing chapter (if any...)
-        if (chapterNumber >= 0)
+        if (oldChapterNumber >= 0 && _chapterNumber != oldChapterNumber && oldChildNumber >= 0)
         {
-            chapters[chapterNumber].Stop();
+            print("CAMBIO DI CHAPTER! STOPPO QUELLO PRIMA...");
+            chapters[oldChapterNumber].Stop();
         }
 
+        oldChapterNumber = chapterNumber;
+        oldChildNumber = childNumber;
         chapterNumber = _chapterNumber;
+        childNumber = _childNumber;
+
         uiManager.UnselectChildPanel();
-        uiManager.SelectChildPanel(chapterNumber, _childNumber);
-        chapters[chapterNumber].PlayChild(chapterNumber, _childNumber, GoNextChapter);
+        uiManager.SelectChildPanel(chapterNumber, childNumber);
+        chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
     }
 
 
@@ -136,6 +144,7 @@ public class GameManager : MonoBehaviour
     {
         // if (playAuto)
         // {
+        oldChapterNumber = chapterNumber;
         chapterNumber++;
         if (chapterNumber <= chapters.Count - 1)
         {
