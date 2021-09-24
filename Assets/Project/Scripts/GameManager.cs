@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour
 
     public void PlayAll()
     {
-        PlayChapter(0);
+        // PlayChapter(0);
+        PlayChild(0, 0);
     }
 
     public void PlayChapter(int number, bool lastChild = false)
@@ -87,18 +88,19 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void PlayChild(int number, int childNumber){
-        
+    public void PlayChild(int _chapterNumber, int _childNumber)
+    {
+
         /// Stop previous playing chapter (if any...)
         if (chapterNumber >= 0)
         {
             chapters[chapterNumber].Stop();
         }
 
-        chapterNumber = number;
+        chapterNumber = _chapterNumber;
         uiManager.UnselectChildPanel();
-        uiManager.SelectChildPanel(chapterNumber, childNumber);
-        chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
+        uiManager.SelectChildPanel(chapterNumber, _childNumber);
+        chapters[chapterNumber].PlayChild(chapterNumber, _childNumber, GoNextChapter);
     }
 
 
@@ -137,7 +139,8 @@ public class GameManager : MonoBehaviour
         chapterNumber++;
         if (chapterNumber <= chapters.Count - 1)
         {
-            PlayChapter(chapterNumber);
+            // PlayChapter(chapterNumber);
+            PlayChild(chapterNumber, 0);
         }
         else
         {
@@ -152,7 +155,9 @@ public class GameManager : MonoBehaviour
         chapterNumber--;
         if (chapterNumber >= 0)
         {
-            PlayChapter(chapterNumber, true);
+            // PlayChapter(chapterNumber, true);
+            int childNumber = chapters[chapterNumber].childs.Count - 1;
+            PlayChild(chapterNumber, childNumber);
         }
         else
         {

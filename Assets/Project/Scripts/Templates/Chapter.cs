@@ -113,7 +113,10 @@ public class Chapter : MonoBehaviour
             childNumber++;
             if (childNumber <= childs.Count - 1)
             {
-                PlayChild();
+                // PlayChild();
+                /// we have to call the function from GameManager
+                /// to highlight the menu panels...
+                GameManager.instance.PlayChild(chapterNumber, childNumber);
             }
             else
             {
@@ -138,7 +141,10 @@ public class Chapter : MonoBehaviour
             childNumber--;
             if (childNumber >= 0)
             {
-                PlayChild();
+                // PlayChild();
+                /// we have to call the function from GameManager
+                /// to highlight the menu panels...
+                GameManager.instance.PlayChild(chapterNumber, childNumber);
             }
             else
             {

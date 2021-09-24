@@ -80,23 +80,43 @@ public class UiManager : MonoBehaviour
 
 
         GameObject go;
+        PanelMenuChapterCtrl panelChapter;
+        PanelMenuChildrCtrl panelChild;
+
         if (Utils.IsPointerOverUI("Menu", out go))
         {
             if (go != uiGameobject)
             {
                 if (uiGameobject != null)
                 {
-                    uiGameobject.GetComponent<PanelMenuChildrCtrl>().SetDefault();
+                    if (isPanelChild(uiGameobject, out panelChild))
+                    {
+                        panelChild.SetDefault();
+                    }
+
+                    // uiGameobject.GetComponent<PanelMenuChildrCtrl>().SetDefault();
                 }
+
                 uiGameobject = go;
-                go.GetComponent<PanelMenuChildrCtrl>().SetHighlight();
+
+                if (isPanelChild(uiGameobject, out panelChild))
+                {
+                    panelChild.SetHighlight();
+                }
+
+                // go.GetComponent<PanelMenuChildrCtrl>().SetHighlight();
             }
         }
         else
         {
             if (uiGameobject != null)
             {
-                uiGameobject.GetComponent<PanelMenuChildrCtrl>().SetDefault();
+                if (isPanelChild(uiGameobject, out panelChild))
+                {
+                    panelChild.SetDefault();
+                }
+                
+                // uiGameobject.GetComponent<PanelMenuChildrCtrl>().SetDefault();
                 uiGameobject = null;
             }
         }
@@ -112,19 +132,19 @@ public class UiManager : MonoBehaviour
 
     }
 
-    // bool isChildMenu(GameObject go, out PanelMenuChildrCtrl _panel)
-    // {
-    //     _panel = null;
-    //     if (go.GetComponent<PanelMenuChildrCtrl>() != null)
-    //     {
-    //         _panel = go.GetComponent<PanelMenuChildrCtrl>();
-    //         return true;
-    //     }
-    //     else
-    //     {
-    //         return false;
-    //     }
-    // }
+    bool isPanelChild(GameObject go, out PanelMenuChildrCtrl _panel)
+    {
+        _panel = null;
+        if (go.GetComponent<PanelMenuChildrCtrl>() != null)
+        {
+            _panel = go.GetComponent<PanelMenuChildrCtrl>();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 
     public void SelectPanel(int number)
@@ -176,7 +196,7 @@ public class UiManager : MonoBehaviour
                 GameObject newGo = Instantiate(childMenuPrefab, menuContainer);
                 PanelMenuChildrCtrl _panelMenuChildCtrl = newGo.GetComponent<PanelMenuChildrCtrl>();
                 _panelMenuChildCtrl.Setup(i, ii, child);
-                
+
                 childs.Add(newGo);
                 ii++;
             }
