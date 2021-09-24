@@ -19,8 +19,12 @@ public class UiManager : MonoBehaviour
     string panelSelectedName;
     private PanelMenuChapterCtrl panel;
 
+    GameObject uiGameobject;
+    GameObject uiGameobjectSelected;
+
+
     List<PanelMenuChapterCtrl> panelMenuChapterCtrls = new List<PanelMenuChapterCtrl>();
-    List<PanelMenuChildrCtrl> allChilds = new List<PanelMenuChildrCtrl>();
+    List<List<GameObject>> allChilds = new List<List<GameObject>>();
 
 
     PanelMenuChapterCtrl GetPanelByName(string name)
@@ -45,35 +49,83 @@ public class UiManager : MonoBehaviour
 
     void Update()
     {
-        string name = null;
-        if (Utils.IsPointerOverUI("Menu", out name))
+        // string name = null;
+        // if (Utils.IsPointerOverUI("Menu", out name))
+        // {
+        //     if (name != uiElementName)
+        //     {
+        //         uiElementName = name;
+        //         panel = GetPanelByName(uiElementName);
+        //         panel.SetHighlight();
+        //     }
+        // }
+        // else
+        // {
+        //     if (uiElementName != null)
+        //     {
+        //         panel = GetPanelByName(uiElementName);
+        //         panel.SetDefault();
+        //         uiElementName = null;
+        //     }
+        // }
+
+        // if (Input.GetMouseButtonDown(0) && uiElementName != null)
+        // {
+        //     panel = GetPanelByName(uiElementName);
+        //     panel.PlayChapter();
+
+        //     /// close menu
+        //     SideMenuCtrl.instance.Toggle();
+        // }
+
+
+        GameObject go;
+        if (Utils.IsPointerOverUI("Menu", out go))
         {
-            if (name != uiElementName)
+            if (go != uiGameobject)
             {
-                uiElementName = name;
-                panel = GetPanelByName(uiElementName);
-                panel.SetHighlight();
+                if (uiGameobject != null)
+                {
+                    uiGameobject.GetComponent<PanelMenuChildrCtrl>().SetDefault();
+                }
+                uiGameobject = go;
+                go.GetComponent<PanelMenuChildrCtrl>().SetHighlight();
             }
         }
         else
         {
-            if (uiElementName != null)
+            if (uiGameobject != null)
             {
-                panel = GetPanelByName(uiElementName);
-                panel.SetDefault();
-                uiElementName = null;
+                uiGameobject.GetComponent<PanelMenuChildrCtrl>().SetDefault();
+                uiGameobject = null;
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && uiElementName != null)
+        if (Input.GetMouseButtonDown(0) && uiGameobject != null)
         {
-            panel = GetPanelByName(uiElementName);
-            panel.PlayChapter();
+            uiGameobject.GetComponent<PanelMenuChildrCtrl>().PlayChild();
+            // panel.PlayChapter();
 
             /// close menu
-            SideMenuCtrl.instance.Toggle();
+            // SideMenuCtrl.instance.Toggle();
         }
+
     }
+
+    // bool isChildMenu(GameObject go, out PanelMenuChildrCtrl _panel)
+    // {
+    //     _panel = null;
+    //     if (go.GetComponent<PanelMenuChildrCtrl>() != null)
+    //     {
+    //         _panel = go.GetComponent<PanelMenuChildrCtrl>();
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         return false;
+    //     }
+    // }
+
 
     public void SelectPanel(int number)
     {
@@ -91,30 +143,45 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    public void SelectChildPanel(int number, int childNumber)
+    {
+        uiGameobjectSelected = allChilds[number][childNumber];
+        uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetSelected();
+    }
+
+    public void UnselectChildPanel()
+    {
+        print("UNSELECT");
+        if (uiGameobjectSelected != null)
+        {
+            uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetUnselected();
+        }
+    }
+
     public void SetupMenu(List<Chapter> chapters)
     {
         int i = 0;
         foreach (Chapter chapter in chapters)
         {
-            print(chapter.childs.Count);
-
             GameObject go = Instantiate(chapterMenuPrefab, menuContainer);
             PanelMenuChapterCtrl _panelMenuChapterCtrl = go.GetComponent<PanelMenuChapterCtrl>();
             _panelMenuChapterCtrl.Setup(chapter, i);
             panelMenuChapterCtrls.Add(_panelMenuChapterCtrl);
 
             /// create sub items
-            // List<GameObject> childs = new List<GameObject>();
+            List<GameObject> childs = new List<GameObject>();
             int ii = 0;
             foreach (GameObject child in chapter.childs)
             {
                 GameObject newGo = Instantiate(childMenuPrefab, menuContainer);
                 PanelMenuChildrCtrl _panelMenuChildCtrl = newGo.GetComponent<PanelMenuChildrCtrl>();
                 _panelMenuChildCtrl.Setup(i, ii, child);
-                // allChilds.Add(_panelMenuChildCtrl);
-
+                
+                childs.Add(newGo);
                 ii++;
             }
+
+            allChilds.Add(childs);
             i++;
         }
     }

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public bool playAuto;
 
     public static event Action<bool> OnSpeakerToggleEvent;
+    public static event Action<bool> OnPlayAutoToggleEvent;
 
 
     private void Awake()
@@ -85,6 +86,22 @@ public class GameManager : MonoBehaviour
         chapters[chapterNumber].PlayAll(chapterNumber, lastChild, GoNextChapter);
     }
 
+
+    public void PlayChild(int number, int childNumber){
+        
+        /// Stop previous playing chapter (if any...)
+        if (chapterNumber >= 0)
+        {
+            chapters[chapterNumber].Stop();
+        }
+
+        chapterNumber = number;
+        uiManager.UnselectChildPanel();
+        uiManager.SelectChildPanel(chapterNumber, childNumber);
+        chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
+    }
+
+
     public void GoNextChapterChild()
     {
         chapters[chapterNumber].GoNextChild(true);
@@ -109,6 +126,7 @@ public class GameManager : MonoBehaviour
     public void TogglePlayAuto()
     {
         playAuto = !playAuto;
+        if (OnPlayAutoToggleEvent != null) OnPlayAutoToggleEvent(playAuto);
     }
 
 

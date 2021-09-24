@@ -13,8 +13,19 @@ public class Picture : MonoBehaviour
     Texture2D tex = null;
     byte[] fileData;
 
+    Coroutine waitCoroutine;
+    Action callback;
 
-    public void Play(Action callback)
+    private void OnEnable() {
+        GameManager.OnPlayAutoToggleEvent += OnPlayAutoToggle;
+    }
+
+    private void OnDisable() {
+        GameManager.OnPlayAutoToggleEvent -= OnPlayAutoToggle;
+    }
+
+
+    public void Play(Action _callback)
     {
         if (mat == null)
         {
@@ -27,12 +38,22 @@ public class Picture : MonoBehaviour
             rend.material = mat;
         }
 
-        StartCoroutine(_Play(callback));
+        callback = _callback;
+
+        StartCoroutine(Wait());
     }
 
-    IEnumerator _Play(Action callback)
+    IEnumerator Wait()
     {
         yield return new WaitForSeconds(10);
+        waitCoroutine = null;
         callback();
+    }
+
+
+    void OnPlayAutoToggle(bool value){
+        if (value){
+            if (waitCoroutine == null) waitCoroutine = StartCoroutine(Wait());
+        }
     }
 }

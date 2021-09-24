@@ -25,17 +25,25 @@ public class Chapter : MonoBehaviour
 
 
 
-    public void PlayAll(int number, bool lastChild, Action callback)
+    public void PlayAll(int _chapterNumber, bool lastChild, Action callback)
     {
-        chapterNumber = number;
+        chapterNumber = _chapterNumber;
         onEndCallback = callback;
         childNumber = lastChild ? childs.Count - 1 : 0;
         PlayChild();
     }
 
+    
+    public void PlayChild(int _chapterNumber, int _childNumber, Action callback){
+        chapterNumber = _chapterNumber;
+        childNumber = _childNumber;
+        onEndCallback = callback;
+        PlayChild();
+    }
 
 
-    public void PlayChild()
+
+    private void PlayChild()
     {
         /// set UI buttons
         GameManager.instance.uiManager.previousButton.interactable =

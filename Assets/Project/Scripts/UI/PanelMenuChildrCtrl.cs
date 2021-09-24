@@ -11,35 +11,83 @@ public class PanelMenuChildrCtrl : MonoBehaviour
     public Sprite iconVideo;
     public Sprite iconPicture;
 
+    private bool isClicked;
+
     int chapterNumber;
     int childNumber;
     GameObject gameObject;
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private Color defaultColor;
+    public Color overColor;
+    public Color clickColor;
+    private Image backgroundImage;
+
+
+    private void Awake()
     {
-        
+        backgroundImage = GetComponent<Image>();
+        defaultColor = backgroundImage.color;
     }
 
-    // Update is called once per frame
-    void Update()
+ 
+    public void Setup(int _chapterNumber, int _childNumber, GameObject _gameObject)
     {
-        
-    }
-
-    public void Setup(int _chapterNumber, int _childNumber, GameObject _gameObject){
-        print("Setup");
         chapterNumber = _chapterNumber;
         childNumber = _childNumber;
         gameObject = _gameObject;
 
         englishTitle.text = gameObject.name;
-        
-        if (gameObject.GetComponent<Video>() != null){
+
+        if (gameObject.GetComponent<Video>() != null)
+        {
             icon.sprite = iconVideo;
         }
-        if (gameObject.GetComponent<Picture>() != null){
+        if (gameObject.GetComponent<Picture>() != null)
+        {
             icon.sprite = iconPicture;
         }
+    }
+
+
+     public void SetHighlight()
+    {
+        if (!isClicked)
+        {
+            // print("MOUSE OVER: " + prefabName);
+            backgroundImage.color = overColor;
+        }
+    }
+
+    public void SetDefault()
+    {
+        if (!isClicked)
+        {
+            print("MOUSE EXIT: " + gameObject.name);
+            backgroundImage.color = defaultColor;
+        }
+    }
+
+    public void SetSelected()
+    {
+        if (!isClicked)
+        {
+            isClicked = true;
+            // print("MOUSE CLICK: " + prefabName + " - " + prefabNumber);
+            backgroundImage.color = clickColor;
+        }
+    }
+
+    public void SetUnselected()
+    {
+        if (isClicked)
+        {
+            isClicked = false;
+            SetDefault();
+        }
+    }
+
+    public void PlayChild()
+    {
+        GameManager.instance.PlayChild(chapterNumber, childNumber);
     }
 }
