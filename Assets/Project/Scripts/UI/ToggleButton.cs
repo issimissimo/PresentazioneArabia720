@@ -17,7 +17,7 @@ public class ToggleButton : MonoBehaviour
 
     Button button;
     Image image;
-    bool isOn = true;
+    public bool isOn = true;
 
     private void Awake()
     {

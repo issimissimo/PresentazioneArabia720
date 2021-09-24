@@ -13,7 +13,6 @@ public static class Utils
         EventSystem.current.RaycastAll(eventData, raycastResults);
         foreach (RaycastResult raycastResult in raycastResults)
         {
-            //  Debug.Log(raysastResult.gameObject.name);
             if (raycastResult.gameObject.name == name)
             {
                 return true;

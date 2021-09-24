@@ -10,6 +10,7 @@ public class Chapter : MonoBehaviour
     int chapterNumber;
     int childNumber = 0;
     Video video;
+    Picture picture;
     Action onEndCallback;
 
     private void Awake()
@@ -30,6 +31,7 @@ public class Chapter : MonoBehaviour
         onEndCallback = callback;
         childNumber = lastChild ? childs.Count - 1 : 0;
         PlayChild();
+        print("PlayAll: " + gameObject.name + " - " + chapterNumber);
     }
 
     public void PlayChild()
@@ -41,9 +43,10 @@ public class Chapter : MonoBehaviour
         GameManager.instance.uiManager.nextButton.interactable =
             chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1 ? false : true;
 
+
         childs[childNumber].SetActive(true);
 
-        /// if the child is video...
+        /// if the child is VIDEO...
         if (childs[childNumber].GetComponent<Video>() != null)
         {
             GameManager.instance.uiManager.videoPlayerControls.SetActive(true);
@@ -54,10 +57,16 @@ public class Chapter : MonoBehaviour
                 GoNextChild();
             });
         }
-        /// if not video...
-        else
+        /// if the child is PICTURE...
+        else if (childs[childNumber].GetComponent<Picture>() != null)
         {
             GameManager.instance.uiManager.videoPlayerControls.SetActive(false);
+
+            picture = childs[childNumber].GetComponent<Picture>();
+            picture.Play(() =>
+            {
+                GoNextChild();
+            });
         }
     }
 
@@ -68,44 +77,87 @@ public class Chapter : MonoBehaviour
         {
             video.Stop();
             video = null;
-
-            // print("Stop: " + gameObject.name + " - " + childNumber);
             childs[childNumber].SetActive(false);
         }
-
+        else if (picture != null)
+        {
+            picture = null;
+            childs[childNumber].SetActive(false);
+        }
     }
 
 
     public void GoNextChild(bool forced = false)
     {
-        if (!GameManager.instance.playAuto && !forced) return;
-        
-        Stop();
+        if (chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1) return;
 
-        childNumber++;
-        if (childNumber <= childs.Count - 1)
+        if (!GameManager.instance.playAuto && !forced) return;
+
+        BlackPanel.instance.FadeIn(() =>
         {
-            PlayChild();
-        }
-        else
-        {
-            print("onEndCallback");
-            onEndCallback();
-        }
+            Stop();
+
+            BlackPanel.instance.FadeOut();
+
+            childNumber++;
+            if (childNumber <= childs.Count - 1)
+            {
+                PlayChild();
+            }
+            else
+            {
+                print("onEndCallback");
+                onEndCallback();
+            }
+        });
+
+
+        // Stop();
+
+        // childNumber++;
+        // if (childNumber <= childs.Count - 1)
+        // {
+        //     PlayChild();
+        // }
+        // else
+        // {
+        //     print("onEndCallback");
+        //     onEndCallback();
+        // }
     }
 
     public void GoPreviousChild(Action onStartFoundcallback)
     {
-        Stop();
+        if (chapterNumber == 0 && childNumber == 0) return;
 
-        childNumber--;
-        if (childNumber >= 0)
+        BlackPanel.instance.FadeIn(() =>
         {
-            PlayChild();
-        }
-        else
-        {
-            onStartFoundcallback();
-        }
+            Stop();
+
+            BlackPanel.instance.FadeOut();
+
+            childNumber--;
+            if (childNumber >= 0)
+            {
+                PlayChild();
+            }
+            else
+            {
+                onStartFoundcallback();
+            }
+        });
+
+
+        // Stop();
+
+        // childNumber--;
+        // if (childNumber >= 0)
+        // {
+        //     PlayChild();
+        // }
+        // else
+        // {
+        //     onStartFoundcallback();
+        // }
     }
 }

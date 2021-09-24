@@ -91,7 +91,7 @@ public class Video : MonoBehaviour
 
     private void OnSpeakerToggle(bool value)
     {
-        print(gameObject.name + " - OnSpeakerToggle: " + value);
+        // print(gameObject.name + " - OnSpeakerToggle: " + value);
         if (value)
         {
             audioSource.mute = false;

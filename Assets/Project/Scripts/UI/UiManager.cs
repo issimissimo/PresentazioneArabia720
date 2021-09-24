@@ -9,6 +9,8 @@ public class UiManager : MonoBehaviour
     public GameObject chapterMenuPrefab;
     public Button previousButton;
     public Button nextButton;
+    public ToggleButton speaker;
+    public ToggleButton auto;
 
     public GameObject videoPlayerControls;
 

@@ -17,9 +17,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [HideInInspector]
-    public bool speakerIsOn = true;
+    public bool speakerIsOn;
     [HideInInspector]
-    public bool playAuto = true;
+    public bool playAuto;
 
     public static event Action<bool> OnSpeakerToggleEvent;
 
@@ -36,16 +36,37 @@ public class GameManager : MonoBehaviour
                 chapters.Add(child.GetComponent<Chapter>());
             }
         }
+
+        speakerIsOn = uiManager.speaker.isOn;
+        playAuto = uiManager.auto.isOn;
     }
 
 
     void Start()
     {
         /// keep cursor in the window
-        Cursor.lockState = CursorLockMode.Confined;
+        // Cursor.lockState = CursorLockMode.Confined;
 
         uiManager.SetupMenu(chapters);
         PlayAll();
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            print("KEYYYYY");
+            // if (chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1) return;
+            GameManager.instance.GoNextChapterChild();
+            // print(chapterNumber + " - " + childNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            // if (chapterNumber == 0 && childNumber == 0) return;
+            // print(chapterNumber + " - " + childNumber);
+            GameManager.instance.GoPreviousChapterChild();
+        }
     }
 
 
