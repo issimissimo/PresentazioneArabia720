@@ -38,7 +38,11 @@ public class Chapter : MonoBehaviour
         chapterNumber = _chapterNumber;
         childNumber = _childNumber;
         onEndCallback = callback;
-        PlayChild();
+
+
+
+
+        // PlayChild();
     }
 
 
@@ -54,6 +58,9 @@ public class Chapter : MonoBehaviour
 
 
         childs[childNumber].SetActive(true);
+
+        /// black panel
+        BlackPanel.instance.FadeOut();
 
         /// if the child is VIDEO...
         if (childs[childNumber].GetComponent<Video>() != null)
@@ -108,8 +115,6 @@ public class Chapter : MonoBehaviour
         {
             Stop();
 
-            BlackPanel.instance.FadeOut();
-
             childNumber++;
             if (childNumber <= childs.Count - 1)
             {
@@ -135,8 +140,6 @@ public class Chapter : MonoBehaviour
         BlackPanel.instance.FadeIn(() =>
         {
             Stop();
-
-            BlackPanel.instance.FadeOut();
 
             childNumber--;
             if (childNumber >= 0)

@@ -171,7 +171,6 @@ public class UiManager : MonoBehaviour
 
     public void UnselectChildPanel()
     {
-        print("UNSELECT");
         if (uiGameobjectSelected != null)
         {
             uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetUnselected();

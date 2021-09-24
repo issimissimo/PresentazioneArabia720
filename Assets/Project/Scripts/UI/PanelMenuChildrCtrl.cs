@@ -53,7 +53,6 @@ public class PanelMenuChildrCtrl : MonoBehaviour
     {
         if (!isClicked)
         {
-            // print("MOUSE OVER: " + prefabName);
             backgroundImage.color = overColor;
         }
     }
@@ -62,7 +61,6 @@ public class PanelMenuChildrCtrl : MonoBehaviour
     {
         if (!isClicked)
         {
-            print("MOUSE EXIT: " + gameObject.name);
             backgroundImage.color = defaultColor;
         }
     }
@@ -72,7 +70,6 @@ public class PanelMenuChildrCtrl : MonoBehaviour
         if (!isClicked)
         {
             isClicked = true;
-            // print("MOUSE CLICK: " + prefabName + " - " + prefabNumber);
             backgroundImage.color = clickColor;
         }
     }
