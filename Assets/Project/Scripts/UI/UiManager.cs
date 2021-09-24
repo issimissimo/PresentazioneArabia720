@@ -7,6 +7,7 @@ public class UiManager : MonoBehaviour
 {
     public Transform menuContainer;
     public GameObject chapterMenuPrefab;
+    public GameObject childMenuPrefab;
     public Button previousButton;
     public Button nextButton;
     public ToggleButton speaker;
@@ -19,6 +20,7 @@ public class UiManager : MonoBehaviour
     private PanelMenuChapterCtrl panel;
 
     List<PanelMenuChapterCtrl> panelMenuChapterCtrls = new List<PanelMenuChapterCtrl>();
+    List<PanelMenuChildrCtrl> allChilds = new List<PanelMenuChildrCtrl>();
 
 
     PanelMenuChapterCtrl GetPanelByName(string name)
@@ -94,10 +96,25 @@ public class UiManager : MonoBehaviour
         int i = 0;
         foreach (Chapter chapter in chapters)
         {
+            print(chapter.childs.Count);
+
             GameObject go = Instantiate(chapterMenuPrefab, menuContainer);
             PanelMenuChapterCtrl _panelMenuChapterCtrl = go.GetComponent<PanelMenuChapterCtrl>();
             _panelMenuChapterCtrl.Setup(chapter, i);
             panelMenuChapterCtrls.Add(_panelMenuChapterCtrl);
+
+            /// create sub items
+            // List<GameObject> childs = new List<GameObject>();
+            int ii = 0;
+            foreach (GameObject child in chapter.childs)
+            {
+                GameObject newGo = Instantiate(childMenuPrefab, menuContainer);
+                PanelMenuChildrCtrl _panelMenuChildCtrl = newGo.GetComponent<PanelMenuChildrCtrl>();
+                _panelMenuChildCtrl.Setup(i, ii, child);
+                // allChilds.Add(_panelMenuChildCtrl);
+
+                ii++;
+            }
             i++;
         }
     }

@@ -56,16 +56,11 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            print("KEYYYYY");
-            // if (chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1) return;
-            GameManager.instance.GoNextChapterChild();
-            // print(chapterNumber + " - " + childNumber);
+            GoNextChapterChild();
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            // if (chapterNumber == 0 && childNumber == 0) return;
-            // print(chapterNumber + " - " + childNumber);
-            GameManager.instance.GoPreviousChapterChild();
+            GoPreviousChapterChild();
         }
     }
 

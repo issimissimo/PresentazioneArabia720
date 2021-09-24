@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1930797411047758585, guid: ec0d0adddb975784da8559b1d4ecaaff, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1930797411047758585, guid: ec0d0adddb975784da8559b1d4ecaaff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -978,6 +978,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &541854421
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1462032231}
+    m_Modifications:
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758586, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: videoName
+      value: 30 Second Coca Cola Commercial.mp4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930797411047758588, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+      propertyPath: m_Name
+      value: Video (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
 --- !u!1 &550358869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1075,11 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &570602411 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
+  m_PrefabInstance: {fileID: 541854421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &581891122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2318,8 +2384,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1892680271}
   - {fileID: 121317844}
+  - {fileID: 1892680271}
   - {fileID: 1424952335}
   m_Father: {fileID: 286126695}
   m_RootOrder: 0
@@ -2601,7 +2667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2844,7 +2910,7 @@ GameObject:
   - component: {fileID: 1462032231}
   - component: {fileID: 1462032232}
   m_Layer: 0
-  m_Name: Chapter1 (1)
+  m_Name: Chapter2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2863,6 +2929,7 @@ Transform:
   m_Children:
   - {fileID: 1930263796}
   - {fileID: 286273817}
+  - {fileID: 570602411}
   m_Father: {fileID: 286126695}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3092,6 +3159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuContainer: {fileID: 637125229}
   chapterMenuPrefab: {fileID: 2385790219660917921, guid: 59ddd68ddb2a33943be875d9a2540848, type: 3}
+  childMenuPrefab: {fileID: 2385790219660917921, guid: 55e7f83058c5ee14281e3037a497dd82, type: 3}
   previousButton: {fileID: 1055834908}
   nextButton: {fileID: 2058539075}
   speaker: {fileID: 721180616}
@@ -3378,7 +3446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3651,7 +3719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openAnimDuration: 1
-  hideOnStart: 1
+  hideOnStart: 0
 --- !u!1 &2058036196
 GameObject:
   m_ObjectHideFlags: 0

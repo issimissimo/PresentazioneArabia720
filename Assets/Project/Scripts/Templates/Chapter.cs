@@ -31,8 +31,9 @@ public class Chapter : MonoBehaviour
         onEndCallback = callback;
         childNumber = lastChild ? childs.Count - 1 : 0;
         PlayChild();
-        print("PlayAll: " + gameObject.name + " - " + chapterNumber);
     }
+
+
 
     public void PlayChild()
     {
@@ -71,6 +72,7 @@ public class Chapter : MonoBehaviour
     }
 
 
+
     public void Stop()
     {
         if (video != null)
@@ -85,6 +87,7 @@ public class Chapter : MonoBehaviour
             childs[childNumber].SetActive(false);
         }
     }
+
 
 
     public void GoNextChild(bool forced = false)
@@ -106,25 +109,13 @@ public class Chapter : MonoBehaviour
             }
             else
             {
-                print("onEndCallback");
+                // print("onEndCallback");
                 onEndCallback();
             }
         });
-
-
-        // Stop();
-
-        // childNumber++;
-        // if (childNumber <= childs.Count - 1)
-        // {
-        //     PlayChild();
-        // }
-        // else
-        // {
-        //     print("onEndCallback");
-        //     onEndCallback();
-        // }
     }
+
+
 
     public void GoPreviousChild(Action onStartFoundcallback)
     {
@@ -146,18 +137,5 @@ public class Chapter : MonoBehaviour
                 onStartFoundcallback();
             }
         });
-
-
-        // Stop();
-
-        // childNumber--;
-        // if (childNumber >= 0)
-        // {
-        //     PlayChild();
-        // }
-        // else
-        // {
-        //     onStartFoundcallback();
-        // }
     }
 }
