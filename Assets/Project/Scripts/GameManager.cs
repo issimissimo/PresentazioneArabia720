@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
     private int chapterNumber = -1;
     public static GameManager instance;
 
-    // [HideInInspector]
+    [HideInInspector]
     public bool speakerIsOn = true;
+    [HideInInspector]
+    public bool playAuto = true;
 
     public static event Action<bool> OnSpeakerToggleEvent;
 
@@ -39,6 +41,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        /// keep cursor in the window
+        Cursor.lockState = CursorLockMode.Confined;
+
         uiManager.SetupMenu(chapters);
         PlayAll();
     }
@@ -66,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     public void GoNextChapterChild()
     {
-        chapters[chapterNumber].GoNextChild();
+        chapters[chapterNumber].GoNextChild(true);
     }
 
     public void GoPreviousChapterChild()
@@ -85,9 +90,16 @@ public class GameManager : MonoBehaviour
         if (OnSpeakerToggleEvent != null) OnSpeakerToggleEvent(speakerIsOn);
     }
 
+    public void TogglePlayAuto()
+    {
+        playAuto = !playAuto;
+    }
+
 
     private void GoNextChapter()
     {
+        // if (playAuto)
+        // {
         chapterNumber++;
         if (chapterNumber <= chapters.Count - 1)
         {
@@ -98,6 +110,7 @@ public class GameManager : MonoBehaviour
             chapterNumber--;
             print("END OF PRESENTATION!");
         }
+        // }
     }
 
     private void GoPreviousChapter()

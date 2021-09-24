@@ -31,18 +31,20 @@ public class VideoPlayerCtrl : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-     void Start()
+    void Start()
     {
         canvasGroup.alpha = 0;
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (!mouseIsOver && Utils.IsPointerOverUI(gameobjectName))
         {
             mouseIsOver = true;
             Toggle();
         }
-        else if(mouseIsOver && !Utils.IsPointerOverUI(gameobjectName)){
+        else if (mouseIsOver && !Utils.IsPointerOverUI(gameobjectName))
+        {
             mouseIsOver = false;
             Toggle();
         }

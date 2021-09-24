@@ -49,7 +49,10 @@ public class Chapter : MonoBehaviour
             GameManager.instance.uiManager.videoPlayerControls.SetActive(true);
 
             video = childs[childNumber].GetComponent<Video>();
-            video.Play(GoNextChild);
+            video.Play(() =>
+            {
+                GoNextChild();
+            });
         }
         /// if not video...
         else
@@ -73,8 +76,10 @@ public class Chapter : MonoBehaviour
     }
 
 
-    public void GoNextChild()
+    public void GoNextChild(bool forced = false)
     {
+        if (!GameManager.instance.playAuto && !forced) return;
+        
         Stop();
 
         childNumber++;
@@ -84,6 +89,7 @@ public class Chapter : MonoBehaviour
         }
         else
         {
+            print("onEndCallback");
             onEndCallback();
         }
     }

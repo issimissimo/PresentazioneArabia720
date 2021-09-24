@@ -1070,6 +1070,18 @@ MonoBehaviour:
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 1
     IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 2011714418}
+    Ordinal: 8
+    Priority: 0
+    IconType: 1610
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 1
+    BackgroundType: 70
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 1
+    IsHidden: 0
 --- !u!4 &581891124
 Transform:
   m_ObjectHideFlags: 0
@@ -1146,63 +1158,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1001 &650711840
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1462032231}
-    m_Modifications:
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758588, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_Name
-      value: Video
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
 --- !u!1 &721180611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1486,7 +1441,19 @@ MonoBehaviour:
   ImageOff: {fileID: 21300000, guid: b3338ab7691c385479792fe31e1d1b82, type: 3}
   OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2030140225}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: TogglePlayAuto
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &801636097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,7 +2074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604adff971003674f92e911a0616f534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openAnimDuration: 0.5
+  openAnimDuration: 0.4
   playButton: {fileID: 1756648717}
   pauseButton: {fileID: 840111592}
   seekSlider: {fileID: 407933026}
@@ -2280,7 +2247,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1424952335}
-  - {fileID: 1855690348}
   m_Father: {fileID: 286126695}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2764,7 +2730,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2022962304}
   - {fileID: 286273817}
   m_Father: {fileID: 286126695}
   m_RootOrder: 1
@@ -3130,72 +3095,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756648715}
   m_CullTransparentMesh: 0
---- !u!4 &1855690348 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-  m_PrefabInstance: {fileID: 1915501500}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1915501500
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1000546485}
-    m_Modifications:
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758586, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: videoName
-      value: 30 Second Coca Cola Commercial.mp4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1930797411047758588, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-      propertyPath: m_Name
-      value: Video (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
 --- !u!1 &1938300585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3406,11 +3305,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!4 &2022962304 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1930797411047758585, guid: fd1071751c6268040a13a3eb7c9f73e4, type: 3}
-  m_PrefabInstance: {fileID: 650711840}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2030140224
 GameObject:
   m_ObjectHideFlags: 0
@@ -3445,6 +3339,7 @@ MonoBehaviour:
   chapters: []
   uiManager: {fileID: 1699361349}
   speakerIsOn: 1
+  playAuto: 1
 --- !u!4 &2030140226
 Transform:
   m_ObjectHideFlags: 0
