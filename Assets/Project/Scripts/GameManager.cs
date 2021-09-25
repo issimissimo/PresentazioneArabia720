@@ -82,44 +82,8 @@ public class GameManager : MonoBehaviour
         uiManager.UnselectChildPanel();
         uiManager.SelectChildPanel(_chapterNumber, _childNumber);
 
-        // oldChapterNumber = chapterNumber;
-        // chapterNumber = _chapterNumber;
-
-        // oldChildNumber = childNumber;
-        // childNumber = _childNumber;
-
-        print("PLAY CHILD ---> oldChapter: " + oldChapterNumber + " - newChapter: " + _chapterNumber + " - oldChild: " + oldChildNumber + " - newChild: " + _childNumber);
-
-        // int chapterToStop = oldChapterNumber;
-        // int childrenToStop = oldChildNumber;
-
-        // if (_chapterNumber != oldChapterNumber && oldChapterNumber >= 0)
-        //     chapterToStop = oldChapterNumber;
-        // else if (_chapterNumber == oldChapterNumber)
-        //     chapterToStop = _chapterNumber;
-
-        // if (_childNumber != oldChildNumber && oldChildNumber >= 0)
-        //     childrenToStop = oldChildNumber;
-        // else if (_childNumber == oldChildNumber)
-        //     childrenToStop = _childNumber;
-
-        // if (chapterToStop >= 0 && childrenToStop >= 0)
-        // {
-
-        // BlackPanel.instance.FadeIn(() =>
-        // {
-        //     chapters[chapterToStop].StopChild(childrenToStop);
-        //     PlayChild();
-        // });
-
-
         if (BlackPanel.isFading)
         {
-            ///////////////////////////////////////////////
-            ////////////////////////////////////////
-            ///////////////////////
-            print("IS FADING");
-
             oldChapterNumber = chapterNumber;
             oldChildNumber = childNumber;
 
@@ -134,9 +98,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // chapters[chapterToStop].StopChild(childrenToStop);
-            // PlayChild();
-            // print("IS NOT FADING");
             BlackPanel.instance.FadeIn(() =>
             {
 
@@ -146,37 +107,17 @@ public class GameManager : MonoBehaviour
                 chapterNumber = _chapterNumber;
                 childNumber = _childNumber;
 
-                print("---> oldChapter: " + oldChapterNumber + " - newChapter: " + chapterNumber + " - oldChild: " + oldChildNumber + " - newChild: " + childNumber);
-
                 if (oldChapterNumber >= 0 && oldChildNumber >= 0)
                     chapters[oldChapterNumber].StopChild(oldChildNumber);
 
                 PlayChild();
             });
-            // }
-
-
-            // chapters[chapterToStop].StopChild(childrenToStop);
-            // PlayChild();
         }
-        // else
-        // {
-        //     print("NON STOPPO");
-        //     oldChapterNumber = chapterNumber;
-        //     chapterNumber = _chapterNumber;
-
-        //     oldChildNumber = childNumber;
-        //     childNumber = _childNumber;
-
-
-        //     PlayChild();
-        // }
     }
 
     private void PlayChild()
     {
         BlackPanel.instance.FadeOut();
-
         chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
     }
 

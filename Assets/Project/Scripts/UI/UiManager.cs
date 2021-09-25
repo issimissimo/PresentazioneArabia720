@@ -48,17 +48,19 @@ public class UiManager : MonoBehaviour
 
 
 
-
-    protected RectTransform contentPanel;
-    public void SnapTo(RectTransform target)
+    private void ScrollToCurrentElement()
     {
-        Canvas.ForceUpdateCanvases();
+        var siblingIndex = uiGameobjectSelected.transform.GetSiblingIndex();
 
-        contentPanel = menuContainer.gameObject.GetComponent<RectTransform>();
+        float pos = 1f - (float)siblingIndex / scrollViewport.content.transform.childCount;
 
-        contentPanel.anchoredPosition =
-            (Vector2)scrollViewport.transform.InverseTransformPoint(contentPanel.position)
-            - (Vector2)scrollViewport.transform.InverseTransformPoint(target.position);
+        if (pos < 0.4)
+        {
+            float correction = 1f / scrollViewport.content.transform.childCount;
+            pos -= correction;
+        }
+
+        scrollViewport.verticalNormalizedPosition = pos;
     }
 
 
@@ -166,6 +168,9 @@ public class UiManager : MonoBehaviour
         panel = GetPanelByNumber(number);
         panel.SetSelected();
         panelSelectedName = panel.prefabName;
+
+        /// here we have to move the scroll rect to the selected panel
+        // SnapTo(panel.gameObject.GetComponent<RectTransform>());
     }
 
     public void UnselectPanel()
@@ -181,6 +186,9 @@ public class UiManager : MonoBehaviour
     {
         uiGameobjectSelected = allChilds[number][childNumber];
         uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetSelected();
+
+        /// here we have to move the scroll rect to the selected panel
+        ScrollToCurrentElement();
     }
 
     public void UnselectChildPanel()
