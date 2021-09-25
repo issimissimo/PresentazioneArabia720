@@ -165,12 +165,14 @@ public class UiManager : MonoBehaviour
 
     public void SelectChildPanel(int number, int childNumber)
     {
+        // print("SELECTCHILDPANEL: " + number + " / " + childNumber);
         uiGameobjectSelected = allChilds[number][childNumber];
         uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetSelected();
     }
 
     public void UnselectChildPanel()
     {
+        // print("UNSELECTCHILDPANEL");
         if (uiGameobjectSelected != null)
         {
             uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetUnselected();

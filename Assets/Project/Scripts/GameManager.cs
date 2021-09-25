@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -12,11 +12,14 @@ public class GameManager : MonoBehaviour
     public List<Chapter> chapters;
     public UiManager uiManager;
 
-    [HideInInspector]
+    
     private int chapterNumber = -1;
     private int oldChapterNumber = -1;
+    // private int newOldChapterNumber = -1;
     private int childNumber = -1;
     private int oldChildNumber = -1;
+
+
     public static GameManager instance;
 
     [HideInInspector]
@@ -75,40 +78,92 @@ public class GameManager : MonoBehaviour
         PlayChild(0, 0);
     }
 
-    public void PlayChapter(int number, bool lastChild = false)
-    {
-        uiManager.UnselectPanel();
-        uiManager.SelectPanel(number);
+    // public void PlayChapter(int number, bool lastChild = false)
+    // {
+    //     uiManager.UnselectPanel();
+    //     uiManager.SelectPanel(number);
 
-        /// Stop previous playing chapter (if any...)
-        if (chapterNumber >= 0)
-        {
-            chapters[chapterNumber].Stop();
-        }
+    //     /// Stop previous playing chapter (if any...)
+    //     if (chapterNumber >= 0)
+    //     {
+    //         chapters[chapterNumber].Stop();
+    //     }
 
-        chapterNumber = number;
-        chapters[chapterNumber].PlayAll(chapterNumber, lastChild, GoNextChapter);
-    }
+    //     chapterNumber = number;
+    //     chapters[chapterNumber].PlayAll(chapterNumber, lastChild, GoNextChapter);
+    // }
 
 
     public void PlayChild(int _chapterNumber, int _childNumber)
     {
-        print("GAME MANAGER ----> PLAY CHILD");
+        // print("/// " + _chapterNumber + " /// " + oldChapterNumber);
+
         /// Stop previous playing chapter (if any...)
-        if (oldChapterNumber >= 0 && _chapterNumber != oldChapterNumber && oldChildNumber >= 0)
-        {
-            print("CAMBIO DI CHAPTER! STOPPO QUELLO PRIMA...");
-            chapters[oldChapterNumber].Stop();
-        }
+
+        // if (oldChapterNumber >= 0 && _chapterNumber != oldChapterNumber && oldChildNumber >= 0)
+        // {
+        //     print("CAMBIO DI CHAPTER! STOPPO QUELLO PRIMA...");
+        //     chapters[oldChapterNumber].Stop();
+        // }
 
         oldChapterNumber = chapterNumber;
-        oldChildNumber = childNumber;
         chapterNumber = _chapterNumber;
+
+        oldChildNumber = childNumber;
         childNumber = _childNumber;
 
-        uiManager.UnselectChildPanel();
-        uiManager.SelectChildPanel(chapterNumber, childNumber);
-        chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
+
+        // newOldChapterNumber = _chapterNumber;
+
+
+        print("PLAY CHILD ---> oldChapter: " + oldChapterNumber + " - newChapter: " + chapterNumber + " - oldChild: " + oldChildNumber + " - newChild: " + childNumber);
+
+
+        int chapterToStop = -1;
+        int childrenToStop = -1;
+
+        if (chapterNumber != oldChapterNumber && oldChapterNumber >= 0)
+            chapterToStop = oldChapterNumber;
+        else if (chapterNumber == oldChapterNumber)
+            chapterToStop = chapterNumber;
+
+        if (oldChildNumber >= 0)
+            childrenToStop = oldChildNumber;
+
+
+        if (chapterToStop >= 0 && childrenToStop >= 0)
+        {
+            BlackPanel.instance.FadeIn(() =>
+            {
+                chapters[chapterToStop].StopChild(childrenToStop);
+
+                BlackPanel.instance.FadeOut();
+
+                uiManager.UnselectChildPanel();
+                uiManager.SelectChildPanel(chapterNumber, childNumber);
+                chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
+            });
+        }
+        else
+        {
+
+            BlackPanel.instance.FadeOut();
+
+            uiManager.UnselectChildPanel();
+            uiManager.SelectChildPanel(chapterNumber, childNumber);
+            chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
+        }
+
+
+
+        // oldChapterNumber = chapterNumber;
+        // oldChildNumber = childNumber;
+        // chapterNumber = _chapterNumber;
+        // childNumber = _childNumber;
+
+        // uiManager.UnselectChildPanel();
+        // uiManager.SelectChildPanel(chapterNumber, childNumber);
+        // chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
     }
 
 
@@ -144,16 +199,17 @@ public class GameManager : MonoBehaviour
     {
         // if (playAuto)
         // {
-        oldChapterNumber = chapterNumber;
-        chapterNumber++;
-        if (chapterNumber <= chapters.Count - 1)
+        // oldChapterNumber = chapterNumber;
+        
+        if (chapterNumber + 1 <= chapters.Count - 1)
         {
             // PlayChapter(chapterNumber);
-            PlayChild(chapterNumber, 0);
+            
+            PlayChild(chapterNumber + 1, 0);
         }
         else
         {
-            chapterNumber--;
+            // chapterNumber--;
             print("END OF PRESENTATION!");
         }
         // }
@@ -161,12 +217,13 @@ public class GameManager : MonoBehaviour
 
     private void GoPreviousChapter()
     {
-        chapterNumber--;
-        if (chapterNumber >= 0)
+        // chapterNumber--;
+        if (chapterNumber - 1 >= 0)
         {
             // PlayChapter(chapterNumber, true);
-            int childNumber = chapters[chapterNumber].childs.Count - 1;
-            PlayChild(chapterNumber, childNumber);
+            int childNumber = chapters[chapterNumber - 1].childs.Count - 1;
+            // print(chapters[chapterNumber].childs.Count);
+            PlayChild(chapterNumber - 1, childNumber);
         }
         else
         {

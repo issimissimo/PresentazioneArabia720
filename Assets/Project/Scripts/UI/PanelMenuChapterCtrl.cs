@@ -73,7 +73,7 @@ public class PanelMenuChapterCtrl : MonoBehaviour
 
     public void PlayChapter()
     {
-        GameManager.instance.PlayChapter(prefabNumber);
+        // GameManager.instance.PlayChapter(prefabNumber);
     }
 
 

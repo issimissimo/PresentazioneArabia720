@@ -45,16 +45,16 @@ public class Chapter : MonoBehaviour
         // print("PLAYCHILD " + childNumber + " - OLD: " + oldChildNumber);
 
 
-        BlackPanel.instance.FadeIn(() =>
-        {
-            Stop();
+        // BlackPanel.instance.FadeIn(() =>
+        // {
+        //     Stop();
 
 
-            PlayChild();
+        //     PlayChild();
 
-        });
+        // });
 
-        // PlayChild();
+        PlayChild();
     }
 
 
@@ -71,8 +71,8 @@ public class Chapter : MonoBehaviour
 
         childs[childNumber].SetActive(true);
 
-        /// black panel
-        BlackPanel.instance.FadeOut();
+        // /// black panel
+        // BlackPanel.instance.FadeOut();
 
         /// if the child is VIDEO...
         if (childs[childNumber].GetComponent<Video>() != null)
@@ -100,20 +100,38 @@ public class Chapter : MonoBehaviour
 
 
 
-    public void Stop()
+    // public void Stop()
+    // {
+    //     if (video != null)
+    //     {
+    //         print(gameObject.name + " --> STOP CHILD: " + oldChildNumber);
+    //         video.Stop();
+    //         video = null;
+    //         childs[oldChildNumber].SetActive(false);
+    //     }
+    //     else if (picture != null)
+    //     {
+    //         print(gameObject.name + " --> STOP CHILD: " + oldChildNumber);
+    //         picture = null;
+    //         childs[oldChildNumber].SetActive(false);
+    //     }
+    // }
+
+
+    public void StopChild(int _childNumber)
     {
         if (video != null)
         {
-            print(gameObject.name +  " --> STOP CHILD: " + oldChildNumber);
+            print(gameObject.name + " --> STOP CHILD: " + _childNumber);
             video.Stop();
             video = null;
-            childs[oldChildNumber].SetActive(false);
+            childs[_childNumber].SetActive(false);
         }
         else if (picture != null)
         {
-            print(gameObject.name +  " --> STOP CHILD: " + oldChildNumber);
+            print(gameObject.name + " --> STOP CHILD: " + _childNumber);
             picture = null;
-            childs[oldChildNumber].SetActive(false);
+            childs[_childNumber].SetActive(false);
         }
     }
 
@@ -125,24 +143,7 @@ public class Chapter : MonoBehaviour
 
         if (!GameManager.instance.playAuto && !forced) return;
 
-        // BlackPanel.instance.FadeIn(() =>
-        // {
-        //     Stop();
-
-        //     childNumber++;
-        //     if (childNumber <= childs.Count - 1)
-        //     {
-        //         // PlayChild();
-        //         /// we have to call the function from GameManager
-        //         /// to highlight the menu panels...
-        //         GameManager.instance.PlayChild(chapterNumber, childNumber);
-        //     }
-        //     else
-        //     {
-        //         // print("onEndCallback");
-        //         onEndCallback();
-        //     }
-        // });
+        
         if (childNumber + 1 <= childs.Count - 1)
         {
             GameManager.instance.PlayChild(chapterNumber, childNumber + 1);
@@ -150,7 +151,6 @@ public class Chapter : MonoBehaviour
         else
         {
             print("FINITO IL CHAPTER, PASSO A QUELLO SUCCESSIVO...");
-            oldChildNumber ++;
             onEndCallback();
         }
     }
@@ -161,30 +161,13 @@ public class Chapter : MonoBehaviour
     {
         if (chapterNumber == 0 && childNumber == 0) return;
 
-        // BlackPanel.instance.FadeIn(() =>
-        // {
-        //     Stop();
-
-        //     childNumber--;
-        //     if (childNumber >= 0)
-        //     {
-        //         // PlayChild();
-        //         /// we have to call the function from GameManager
-        //         /// to highlight the menu panels...
-        //         GameManager.instance.PlayChild(chapterNumber, childNumber);
-        //     }
-        //     else
-        //     {
-        //         onStartFoundcallback();
-        //     }
-        // });
         if (childNumber - 1 >= 0)
         {
             GameManager.instance.PlayChild(chapterNumber, childNumber - 1);
         }
         else
         {
-            oldChildNumber --;
+            print("INIZIO DEL CHAPTER, PASSO A QUELLO PRECEDENTE...");
             onStartFoundcallback();
         }
     }
