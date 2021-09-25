@@ -50,7 +50,7 @@ public class UiManager : MonoBehaviour
 
     private void ScrollToCurrentElement()
     {
-        var siblingIndex = uiGameobjectSelected.transform.GetSiblingIndex();
+        int siblingIndex = uiGameobjectSelected.transform.GetSiblingIndex();
 
         float pos = 1f - (float)siblingIndex / scrollViewport.content.transform.childCount;
 
