@@ -14,7 +14,7 @@ public class PanelMenuChapterCtrl : MonoBehaviour
     private int prefabNumber;
     // private bool isOver;
     private bool isClicked;
-    private Image backgroundImage;
+    public Image backgroundImage;
 
     private Color defaultColor;
     public Color overColor;
@@ -22,7 +22,7 @@ public class PanelMenuChapterCtrl : MonoBehaviour
 
     private void Awake()
     {
-        backgroundImage = GetComponent<Image>();
+        // backgroundImage = GetComponent<Image>();
         defaultColor = backgroundImage.color;
     }
 
