@@ -16,7 +16,7 @@ public class BlackPanel : MonoBehaviour
     {
         instance = this;
         canvasGroup = GetComponent<CanvasGroup>();
-        canvasGroup.alpha = 0;
+        // canvasGroup.alpha = 0;
     }
 
     public void Toggle(Action callback = null)
@@ -36,6 +36,7 @@ public class BlackPanel : MonoBehaviour
 
     public void FadeIn(Action callback = null)
     {
+        print("FADEIN");
         if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
@@ -48,6 +49,7 @@ public class BlackPanel : MonoBehaviour
 
     public void FadeOut(Action callback = null)
     {
+        print("FADEOUT");
         if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
@@ -61,6 +63,7 @@ public class BlackPanel : MonoBehaviour
 
     IEnumerator Fade(float initAlpha, float endAlpha, Action callback)
     {
+        print("FADE");
         float time = Time.time;
         while (Time.time - time <= animDuration)
         {
@@ -72,7 +75,7 @@ public class BlackPanel : MonoBehaviour
 
         canvasGroup.alpha = endAlpha;
         fadeCoroutine = null;
-
+        print("ENDFADE");
         callback();
     }
 }

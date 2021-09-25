@@ -42,18 +42,6 @@ public class Chapter : MonoBehaviour
         childNumber = _childNumber;
         onEndCallback = callback;
 
-        // print("PLAYCHILD " + childNumber + " - OLD: " + oldChildNumber);
-
-
-        // BlackPanel.instance.FadeIn(() =>
-        // {
-        //     Stop();
-
-
-        //     PlayChild();
-
-        // });
-
         PlayChild();
     }
 
@@ -71,8 +59,6 @@ public class Chapter : MonoBehaviour
 
         childs[childNumber].SetActive(true);
 
-        // /// black panel
-        // BlackPanel.instance.FadeOut();
 
         /// if the child is VIDEO...
         if (childs[childNumber].GetComponent<Video>() != null)
@@ -100,36 +86,18 @@ public class Chapter : MonoBehaviour
 
 
 
-    // public void Stop()
-    // {
-    //     if (video != null)
-    //     {
-    //         print(gameObject.name + " --> STOP CHILD: " + oldChildNumber);
-    //         video.Stop();
-    //         video = null;
-    //         childs[oldChildNumber].SetActive(false);
-    //     }
-    //     else if (picture != null)
-    //     {
-    //         print(gameObject.name + " --> STOP CHILD: " + oldChildNumber);
-    //         picture = null;
-    //         childs[oldChildNumber].SetActive(false);
-    //     }
-    // }
-
-
     public void StopChild(int _childNumber)
     {
         if (video != null)
         {
-            print(gameObject.name + " --> STOP CHILD: " + _childNumber);
+            // print(gameObject.name + " --> STOP CHILD: " + _childNumber);
             video.Stop();
             video = null;
             childs[_childNumber].SetActive(false);
         }
         else if (picture != null)
         {
-            print(gameObject.name + " --> STOP CHILD: " + _childNumber);
+            // print(gameObject.name + " --> STOP CHILD: " + _childNumber);
             picture = null;
             childs[_childNumber].SetActive(false);
         }
