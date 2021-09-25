@@ -8,8 +8,7 @@ public class Chapter : MonoBehaviour
     [HideInInspector]
     public List<GameObject> childs;
     int chapterNumber;
-    int childNumber;
-    int oldChildNumber;
+    // int childNumber;
     Video video;
     Picture picture;
     Action onEndCallback;
@@ -26,20 +25,19 @@ public class Chapter : MonoBehaviour
 
 
 
-    public void PlayAll(int _chapterNumber, bool lastChild, Action callback)
-    {
-        chapterNumber = _chapterNumber;
-        onEndCallback = callback;
-        childNumber = lastChild ? childs.Count - 1 : 0;
-        PlayChild();
-    }
+    // public void PlayAll(int _chapterNumber, bool lastChild, Action callback)
+    // {
+    //     chapterNumber = _chapterNumber;
+    //     onEndCallback = callback;
+    //     childNumber = lastChild ? childs.Count - 1 : 0;
+    //     PlayChild();
+    // }
 
 
     public void PlayChild(int _chapterNumber, int _childNumber, Action callback)
     {
         chapterNumber = _chapterNumber;
-        oldChildNumber = childNumber;
-        childNumber = _childNumber;
+        // childNumber = _childNumber;
         onEndCallback = callback;
 
         PlayChild();
@@ -51,32 +49,32 @@ public class Chapter : MonoBehaviour
     {
         /// set UI buttons
         GameManager.instance.uiManager.previousButton.interactable =
-            chapterNumber == 0 && childNumber == 0 ? false : true;
+            chapterNumber == 0 && GameManager.childNumber == 0 ? false : true;
 
         GameManager.instance.uiManager.nextButton.interactable =
-            chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1 ? false : true;
+            chapterNumber == GameManager.instance.chapters.Count - 1 && GameManager.childNumber == childs.Count - 1 ? false : true;
 
 
-        childs[childNumber].SetActive(true);
+        childs[GameManager.childNumber].SetActive(true);
 
 
         /// if the child is VIDEO...
-        if (childs[childNumber].GetComponent<Video>() != null)
+        if (childs[GameManager.childNumber].GetComponent<Video>() != null)
         {
             GameManager.instance.uiManager.videoPlayerControls.SetActive(true);
 
-            video = childs[childNumber].GetComponent<Video>();
+            video = childs[GameManager.childNumber].GetComponent<Video>();
             video.Play(() =>
             {
                 GoNextChild();
             });
         }
         /// if the child is PICTURE...
-        else if (childs[childNumber].GetComponent<Picture>() != null)
+        else if (childs[GameManager.childNumber].GetComponent<Picture>() != null)
         {
             GameManager.instance.uiManager.videoPlayerControls.SetActive(false);
 
-            picture = childs[childNumber].GetComponent<Picture>();
+            picture = childs[GameManager.childNumber].GetComponent<Picture>();
             picture.Play(() =>
             {
                 GoNextChild();
@@ -90,14 +88,14 @@ public class Chapter : MonoBehaviour
     {
         if (video != null)
         {
-            // print(gameObject.name + " --> STOP CHILD: " + _childNumber);
+            print(gameObject.name + " --> STOP CHILD: " + _childNumber);
             video.Stop();
             video = null;
             childs[_childNumber].SetActive(false);
         }
         else if (picture != null)
         {
-            // print(gameObject.name + " --> STOP CHILD: " + _childNumber);
+            print(gameObject.name + " --> STOP CHILD: " + _childNumber);
             picture = null;
             childs[_childNumber].SetActive(false);
         }
@@ -107,14 +105,14 @@ public class Chapter : MonoBehaviour
 
     public void GoNextChild(bool forced = false)
     {
-        if (chapterNumber == GameManager.instance.chapters.Count - 1 && childNumber == childs.Count - 1) return;
+        if (chapterNumber == GameManager.instance.chapters.Count - 1 && GameManager.childNumber == childs.Count - 1) return;
 
         if (!GameManager.instance.playAuto && !forced) return;
 
         
-        if (childNumber + 1 <= childs.Count - 1)
+        if (GameManager.childNumber + 1 <= childs.Count - 1)
         {
-            GameManager.instance.PlayChild(chapterNumber, childNumber + 1);
+            GameManager.instance.PlayChild(chapterNumber, GameManager.childNumber + 1);
         }
         else
         {
@@ -127,11 +125,11 @@ public class Chapter : MonoBehaviour
 
     public void GoPreviousChild(Action onStartFoundcallback)
     {
-        if (chapterNumber == 0 && childNumber == 0) return;
+        if (chapterNumber == 0 && GameManager.childNumber == 0) return;
 
-        if (childNumber - 1 >= 0)
+        if (GameManager.childNumber - 1 >= 0)
         {
-            GameManager.instance.PlayChild(chapterNumber, childNumber - 1);
+            GameManager.instance.PlayChild(chapterNumber, GameManager.childNumber - 1);
         }
         else
         {

@@ -3407,6 +3407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b40c3efe01b264c9d7bc9496834cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollViewport: {fileID: 1542259231}
   menuContainer: {fileID: 71457753}
   chapterMenuPrefab: {fileID: 2385790219660917921, guid: 59ddd68ddb2a33943be875d9a2540848, type: 3}
   childMenuPrefab: {fileID: 2385790219660917921, guid: 55e7f83058c5ee14281e3037a497dd82, type: 3}
@@ -4017,7 +4018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openAnimDuration: 1
-  hideOnStart: 0
+  hideOnStart: 1
 --- !u!1 &2058036196
 GameObject:
   m_ObjectHideFlags: 0

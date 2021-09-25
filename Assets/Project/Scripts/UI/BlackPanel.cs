@@ -9,8 +9,9 @@ public class BlackPanel : MonoBehaviour
     CanvasGroup canvasGroup;
     Coroutine fadeCoroutine;
     public float animDuration = 0.5f;
-
+    public static bool isFading;
     public static BlackPanel instance;
+    private Action callback;
 
     private void Awake()
     {
@@ -19,51 +20,50 @@ public class BlackPanel : MonoBehaviour
         // canvasGroup.alpha = 0;
     }
 
-    public void Toggle(Action callback = null)
+    // public void Toggle(Action _callback = null)
+    // {
+    //     if (fadeCoroutine != null)
+    //     {
+    //         StopCoroutine(fadeCoroutine);
+    //         callback();
+    //     }
+    //     callback = _callback;
+    //     fadeCoroutine = StartCoroutine(Fade(0, 1, () =>
+    //     {
+    //         fadeCoroutine = StartCoroutine(Fade(1, 0, () =>
+    //     {
+    //         if (callback != null) callback();
+    //     }));
+    //     }));
+    // }
+
+    public void FadeIn(Action _callback = null)
     {
         if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
         }
+
         fadeCoroutine = StartCoroutine(Fade(0, 1, () =>
         {
-            fadeCoroutine = StartCoroutine(Fade(1, 0, () =>
-        {
-            if (callback != null) callback();
-        }));
+            if (_callback != null) _callback();
         }));
     }
 
-    public void FadeIn(Action callback = null)
+    public void FadeOut()
     {
-        print("FADEIN");
         if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
         }
-        fadeCoroutine = StartCoroutine(Fade(0, 1, () =>
-        {
-            if (callback != null) callback();
-        }));
-    }
 
-    public void FadeOut(Action callback = null)
-    {
-        print("FADEOUT");
-        if (fadeCoroutine != null)
-        {
-            StopCoroutine(fadeCoroutine);
-        }
-        fadeCoroutine = StartCoroutine(Fade(1, 0, () =>
-        {
-            if (callback != null) callback();
-        }));
+        fadeCoroutine = StartCoroutine(Fade(1, 0));
     }
 
 
-    IEnumerator Fade(float initAlpha, float endAlpha, Action callback)
+    IEnumerator Fade(float initAlpha, float endAlpha, Action _callback = null)
     {
-        print("FADE");
+        isFading = true;
         float time = Time.time;
         while (Time.time - time <= animDuration)
         {
@@ -75,7 +75,7 @@ public class BlackPanel : MonoBehaviour
 
         canvasGroup.alpha = endAlpha;
         fadeCoroutine = null;
-        print("ENDFADE");
-        callback();
+        isFading = false;
+        if (_callback != null) _callback();
     }
 }

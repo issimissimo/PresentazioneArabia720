@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
+    public ScrollRect scrollViewport;
     public Transform menuContainer;
     public GameObject chapterMenuPrefab;
     public GameObject childMenuPrefab;
@@ -45,6 +46,20 @@ public class UiManager : MonoBehaviour
         return panelMenuChapterCtrls[number];
     }
 
+
+
+
+    protected RectTransform contentPanel;
+    public void SnapTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+
+        contentPanel = menuContainer.gameObject.GetComponent<RectTransform>();
+
+        contentPanel.anchoredPosition =
+            (Vector2)scrollViewport.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollViewport.transform.InverseTransformPoint(target.position);
+    }
 
 
     void Update()
@@ -115,7 +130,7 @@ public class UiManager : MonoBehaviour
                 {
                     panelChild.SetDefault();
                 }
-                
+
                 // uiGameobject.GetComponent<PanelMenuChildrCtrl>().SetDefault();
                 uiGameobject = null;
             }
@@ -124,7 +139,6 @@ public class UiManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && uiGameobject != null)
         {
             uiGameobject.GetComponent<PanelMenuChildrCtrl>().PlayChild();
-            // panel.PlayChapter();
 
             /// close menu
             // SideMenuCtrl.instance.Toggle();
@@ -165,14 +179,12 @@ public class UiManager : MonoBehaviour
 
     public void SelectChildPanel(int number, int childNumber)
     {
-        // print("SELECTCHILDPANEL: " + number + " / " + childNumber);
         uiGameobjectSelected = allChilds[number][childNumber];
         uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetSelected();
     }
 
     public void UnselectChildPanel()
     {
-        // print("UNSELECTCHILDPANEL");
         if (uiGameobjectSelected != null)
         {
             uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetUnselected();
