@@ -19,6 +19,7 @@ public class UiManager : MonoBehaviour
     string uiElementName;
     string panelSelectedName;
     private PanelMenuChapterCtrl panel;
+    private bool menuPanelHasBeenClicked;
 
     GameObject uiGameobject;
     GameObject uiGameobjectSelected;
@@ -48,7 +49,7 @@ public class UiManager : MonoBehaviour
 
 
 
-    private void ScrollToCurrentElement()
+    public void ScrollToCurrentElement()
     {
         int siblingIndex = uiGameobjectSelected.transform.GetSiblingIndex();
 
@@ -140,13 +141,26 @@ public class UiManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && uiGameobject != null)
         {
+            menuPanelHasBeenClicked = true;
+
             uiGameobject.GetComponent<PanelMenuChildrCtrl>().PlayChild();
 
             /// close menu
+            StartCoroutine(WaitToCloseMenu());
             // SideMenuCtrl.instance.Toggle();
         }
 
     }
+
+
+    IEnumerator WaitToCloseMenu()
+    {
+        yield return new WaitForSeconds(0.2f);
+        SideMenuCtrl.instance.Toggle();
+    }
+
+
+
 
     bool isPanelChild(GameObject go, out PanelMenuChildrCtrl _panel)
     {
@@ -187,8 +201,18 @@ public class UiManager : MonoBehaviour
         uiGameobjectSelected = allChilds[number][childNumber];
         uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetSelected();
 
+        SelectPanel(number);
+
         /// here we have to move the scroll rect to the selected panel
-        ScrollToCurrentElement();
+        if (menuPanelHasBeenClicked)
+        {
+            menuPanelHasBeenClicked = false;
+        }
+        else
+        {
+            ScrollToCurrentElement();
+        }
+
     }
 
     public void UnselectChildPanel()
@@ -197,6 +221,8 @@ public class UiManager : MonoBehaviour
         {
             uiGameobjectSelected.GetComponent<PanelMenuChildrCtrl>().SetUnselected();
         }
+
+        UnselectPanel();
     }
 
     public void SetupMenu(List<Chapter> chapters)

@@ -84,39 +84,50 @@ public class GameManager : MonoBehaviour
 
         if (BlackPanel.isFading)
         {
-            oldChapterNumber = chapterNumber;
-            oldChildNumber = childNumber;
+            // oldChapterNumber = chapterNumber;
+            // oldChildNumber = childNumber;
 
-            chapterNumber = _chapterNumber;
-            childNumber = _childNumber;
+            // chapterNumber = _chapterNumber;
+            // childNumber = _childNumber;
 
 
-            if (oldChapterNumber >= 0 && oldChildNumber >= 0)
-                chapters[oldChapterNumber].StopChild(oldChildNumber);
+            // if (oldChapterNumber >= 0 && oldChildNumber >= 0)
+            //     chapters[oldChapterNumber].StopChild(oldChildNumber);
 
-            PlayChild();
+            PlayChildContinue(_chapterNumber, _childNumber);
         }
         else
         {
             BlackPanel.instance.FadeIn(() =>
             {
 
-                oldChapterNumber = chapterNumber;
-                oldChildNumber = childNumber;
+                // oldChapterNumber = chapterNumber;
+                // oldChildNumber = childNumber;
 
-                chapterNumber = _chapterNumber;
-                childNumber = _childNumber;
+                // chapterNumber = _chapterNumber;
+                // childNumber = _childNumber;
 
-                if (oldChapterNumber >= 0 && oldChildNumber >= 0)
-                    chapters[oldChapterNumber].StopChild(oldChildNumber);
+                // if (oldChapterNumber >= 0 && oldChildNumber >= 0)
+                //     chapters[oldChapterNumber].StopChild(oldChildNumber);
 
-                PlayChild();
+                PlayChildContinue(_chapterNumber, _childNumber);
             });
         }
     }
 
-    private void PlayChild()
+
+    private void PlayChildContinue(int _chapterNumber, int _childNumber)
     {
+        oldChapterNumber = chapterNumber;
+        oldChildNumber = childNumber;
+
+        chapterNumber = _chapterNumber;
+        childNumber = _childNumber;
+
+        if (oldChapterNumber >= 0 && oldChildNumber >= 0)
+            chapters[oldChapterNumber].StopChild(oldChildNumber);
+
+
         BlackPanel.instance.FadeOut();
         chapters[chapterNumber].PlayChild(chapterNumber, childNumber, GoNextChapter);
     }

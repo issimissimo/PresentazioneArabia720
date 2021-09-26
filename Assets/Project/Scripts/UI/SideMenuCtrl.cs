@@ -57,6 +57,7 @@ public class SideMenuCtrl : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
+            GameManager.instance.uiManager.ScrollToCurrentElement();
             endPos = new Vector2(xInit, yInit);
         }
         else
