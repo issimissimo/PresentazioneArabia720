@@ -137,4 +137,9 @@ public class Chapter : MonoBehaviour
             onStartFoundcallback();
         }
     }
+
+
+    public void ToggleVideoLoop(bool value){
+        video.OnSetLoopToggle(value);
+    }
 }

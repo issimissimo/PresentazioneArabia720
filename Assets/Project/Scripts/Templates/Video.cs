@@ -9,10 +9,12 @@ public class Video : MonoBehaviour
 {
     public string videoName;
     public string speakerAudioName;
+    public bool loop;
     VideoPlayer videoPlayer;
     Coroutine PlayCoroutine;
     Action onVideoFinishedCallback;
     bool isPlaying;
+    bool isLooping;
     AudioClip audioClip;
     AudioSource audioSource;
 
@@ -20,6 +22,12 @@ public class Video : MonoBehaviour
     {
         videoPlayer = GetComponent<VideoPlayer>();
         audioSource = GetComponent<AudioSource>();
+        OnSetLoopToggle(loop);
+    }
+
+    private void Start() {
+        // OnSetLoopToggle(loop);
+        // VideoPlayerCtrl.instance.loopToggleButton.SetState(loop);
     }
 
     private void OnEnable()
@@ -29,8 +37,12 @@ public class Video : MonoBehaviour
         VideoPlayerCtrl.OnStartSeekEvent += OnStartSeekFromUI;
         VideoPlayerCtrl.OnSeekEvent += OnSeekFromUI;
         VideoPlayerCtrl.OnEndSeekEvent += OnEndSeekFromUI;
+        // VideoPlayerCtrl.OnSetLoopEvent += OnSetLoopToggle;
         videoPlayer.loopPointReached += OnVideoFinished;
         GameManager.OnSpeakerToggleEvent += OnSpeakerToggle;
+
+        // OnSetLoopToggle(loop);
+        // VideoPlayerCtrl.instance.loopToggleButton.SetState(loop);
     }
 
 
@@ -41,6 +53,7 @@ public class Video : MonoBehaviour
         VideoPlayerCtrl.OnStartSeekEvent -= OnStartSeekFromUI;
         VideoPlayerCtrl.OnSeekEvent -= OnSeekFromUI;
         VideoPlayerCtrl.OnEndSeekEvent -= OnEndSeekFromUI;
+        // VideoPlayerCtrl.OnSetLoopEvent -= OnSetLoopToggle;
         videoPlayer.loopPointReached -= OnVideoFinished;
         GameManager.OnSpeakerToggleEvent -= OnSpeakerToggle;
     }
@@ -102,10 +115,22 @@ public class Video : MonoBehaviour
         }
     }
 
+
+    public void OnSetLoopToggle(bool value)
+    {
+        isLooping = value;
+        videoPlayer.isLooping = value;
+        print("VIDEO ---> looping: " + videoPlayer.isLooping);
+    }
+
+
     private void OnVideoFinished(VideoPlayer vp)
     {
-        isPlaying = false;
-        if (onVideoFinishedCallback != null) onVideoFinishedCallback();
+        if (!videoPlayer.isLooping)
+        {
+            isPlaying = false;
+            if (onVideoFinishedCallback != null) onVideoFinishedCallback();
+        }
     }
 
     private void OnPlayFromUI()
@@ -143,7 +168,8 @@ public class Video : MonoBehaviour
         if (isPlaying) StartCoroutine(OnEndSeekFromUICoroutine());
     }
 
-    IEnumerator OnEndSeekFromUICoroutine(){
+    IEnumerator OnEndSeekFromUICoroutine()
+    {
         yield return new WaitForSeconds(0.2f);
         OnPlayFromUI();
     }
@@ -187,6 +213,7 @@ public class Video : MonoBehaviour
 
         /// UI
         VideoPlayerCtrl.instance.OnPlay();
+        VideoPlayerCtrl.instance.loopToggleButton.SetState(isLooping);
 
         if (videoPlayer.isPlaying)
         {

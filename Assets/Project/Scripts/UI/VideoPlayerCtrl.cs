@@ -7,8 +7,10 @@ using System;
 public class VideoPlayerCtrl : MonoBehaviour
 {
     public float openAnimDuration = 0.5f;
-    public Button playButton;
-    public Button pauseButton;
+    // public Button _playButton;
+    // public Button _pauseButton;
+    public ToggleButton playPauseToggleButton;
+    public ToggleButton loopToggleButton;
     public Slider seekSlider;
 
     public static event Action OnPLayEvent;
@@ -16,6 +18,7 @@ public class VideoPlayerCtrl : MonoBehaviour
     public static event Action OnStartSeekEvent;
     public static event Action<float> OnSeekEvent;
     public static event Action OnEndSeekEvent;
+    // public static event Action<bool> OnSetLoopEvent;
 
     public static VideoPlayerCtrl instance;
 
@@ -52,17 +55,25 @@ public class VideoPlayerCtrl : MonoBehaviour
 
     /// from UI buttons
 
-    public void Play()
+    public void PlayPause()
     {
-        if (OnPLayEvent != null) OnPLayEvent.Invoke();
-        OnPlay();
+        if (!playPauseToggleButton.IsOn())
+        {
+            if (OnPauseEvent != null) OnPauseEvent.Invoke();
+            print("PAUSE");
+        }
+        else
+        {
+            if (OnPLayEvent != null) OnPLayEvent.Invoke();
+            print("PLAY");
+        }
     }
 
-    public void Pause()
+    public void SetLooping()
     {
-        if (OnPauseEvent != null) OnPauseEvent.Invoke();
-        OnPause();
+        GameManager.instance.ToggleVideoLoop(loopToggleButton.IsOn());
     }
+
 
     public void StartSeek()
     {
@@ -83,22 +94,25 @@ public class VideoPlayerCtrl : MonoBehaviour
 
     /// 
 
+
     public void OnPlay()
     {
-        playButton.interactable = false;
-        pauseButton.interactable = true;
+        print("ONPLAY");
+        playPauseToggleButton.SetState(true);
     }
 
     public void OnPause()
     {
-        playButton.interactable = true;
-        pauseButton.interactable = false;
+        print("ONPAUSE");
+        playPauseToggleButton.SetState(false);
     }
 
     public void OnSeeking(float value)
     {
         seekSlider.value = value;
     }
+
+
 
     public void Toggle()
     {

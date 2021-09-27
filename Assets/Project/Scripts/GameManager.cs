@@ -43,9 +43,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        speakerIsOn = uiManager.speaker.isOn;
-        playAuto = uiManager.auto.isOn;
+        speakerIsOn = uiManager.speaker.isOnAtStart;
+        playAuto = uiManager.auto.isOnAtStart;
     }
+
+
+    // private void OnEnable() {
+    //     VideoPlayerCtrl.OnSetLoopEvent += ToggleVideoLoop;
+    // }
 
 
     void Start()
@@ -160,6 +165,10 @@ public class GameManager : MonoBehaviour
     {
         playAuto = !playAuto;
         if (OnPlayAutoToggleEvent != null) OnPlayAutoToggleEvent(playAuto);
+    }
+
+    public void ToggleVideoLoop(bool value){
+        chapters[chapterNumber].ToggleVideoLoop(value);
     }
 
 

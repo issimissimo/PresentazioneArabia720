@@ -17,7 +17,9 @@ public class ToggleButton : MonoBehaviour
 
     Button button;
     Image image;
-    public bool isOn = true;
+    public bool isOnAtStart = true;
+    [HideInInspector]
+    private bool isOn = true;
 
     private void Awake()
     {
@@ -29,8 +31,25 @@ public class ToggleButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isOn = isOnAtStart;
         button.onClick.AddListener(OnClicked);
         SetImage();
+    }
+
+
+    public void SetState(bool value){
+        isOn = value;
+        SetImage();
+    }
+
+
+    public void Toggle(){
+        isOn = !isOn;
+        SetImage();
+    }
+
+    public bool IsOn(){
+        return isOn;
     }
 
 
@@ -43,7 +62,7 @@ public class ToggleButton : MonoBehaviour
     }
 
 
-    void SetImage()
+    public void SetImage()
     {
         image.sprite = isOn ? imageOn : ImageOff;
     }
