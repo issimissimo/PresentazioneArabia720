@@ -38,7 +38,9 @@ public class ToggleButton : MonoBehaviour
 
 
     public void SetState(bool value){
+        
         isOn = value;
+        print("SETSTATE: " + value );
         SetImage();
     }
 
@@ -64,6 +66,7 @@ public class ToggleButton : MonoBehaviour
 
     public void SetImage()
     {
+        print ("SET IMAGE " + isOn);
         image.sprite = isOn ? imageOn : ImageOff;
     }
 }

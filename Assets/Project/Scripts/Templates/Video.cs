@@ -120,7 +120,6 @@ public class Video : MonoBehaviour
     {
         isLooping = value;
         videoPlayer.isLooping = value;
-        print("VIDEO ---> looping: " + videoPlayer.isLooping);
     }
 
 

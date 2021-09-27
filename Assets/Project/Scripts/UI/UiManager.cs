@@ -20,6 +20,7 @@ public class UiManager : MonoBehaviour
     string panelSelectedName;
     private PanelMenuChapterCtrl panel;
     private bool menuPanelHasBeenClicked;
+    bool justStarted = true;
 
     GameObject uiGameobject;
     GameObject uiGameobjectSelected;
@@ -53,15 +54,24 @@ public class UiManager : MonoBehaviour
     {
         int siblingIndex = uiGameobjectSelected.transform.GetSiblingIndex();
 
-        float pos = 1f - (float)siblingIndex / scrollViewport.content.transform.childCount;
-
-        if (pos < 0.4)
+        /// correct the problem that the 1st chapter
+        /// that has heigth different from the buttons, is cutted on top...
+        if (siblingIndex == 1)
         {
-            float correction = 1f / scrollViewport.content.transform.childCount;
-            pos -= correction;
+            scrollViewport.normalizedPosition = new Vector2(0, 1);
         }
+        else
+        {
+            float pos = 1f - (float)siblingIndex / scrollViewport.content.transform.childCount;
 
-        scrollViewport.verticalNormalizedPosition = pos;
+            if (pos < 0.4)
+            {
+                float correction = 1f / scrollViewport.content.transform.childCount;
+                pos -= correction;
+            }
+
+            scrollViewport.verticalNormalizedPosition = pos;
+        }
     }
 
 
@@ -156,7 +166,7 @@ public class UiManager : MonoBehaviour
     IEnumerator WaitToCloseMenu()
     {
         yield return new WaitForSeconds(0.2f);
-        SideMenuCtrl.instance.Toggle();
+        SideMenuCtrl.instance.OnToggle();
     }
 
 
@@ -210,7 +220,15 @@ public class UiManager : MonoBehaviour
         }
         else
         {
+            // if (justStarted)
+            // {
+            //     justStarted = false;
+            //     scrollViewport.normalizedPosition = new Vector2(0, 1);
+            // }
+            // else
+            // {
             ScrollToCurrentElement();
+            // }
         }
 
     }

@@ -9,6 +9,7 @@ public class SideMenuCtrl : MonoBehaviour
     float xInit;
     float yInit;
     float xSize;
+    public ToggleButton menuToggleButton;
     public float openAnimDuration = 1f;
 
     Coroutine _MovePanel;
@@ -43,6 +44,11 @@ public class SideMenuCtrl : MonoBehaviour
     }
 
 
+    public void OnToggle(){
+        menuToggleButton.SetState(isOpen);
+        Toggle();
+    }
+
 
     public void Toggle()
     {
@@ -67,6 +73,9 @@ public class SideMenuCtrl : MonoBehaviour
         }
 
         _MovePanel = StartCoroutine(_Move(initPos, endPos));
+
+        // print("SET: " + !isOpen);
+        // menuToggleButton.SetState(!isOpen);
     }
 
 
