@@ -39,7 +39,7 @@ public class SideMenuCtrl : MonoBehaviour
 
     public void HideNow()
     {
-        rect.anchoredPosition = new Vector2(xSize, yInit);
+        rect.anchoredPosition = new Vector2(-xSize, yInit);
     }
 
 
@@ -63,7 +63,7 @@ public class SideMenuCtrl : MonoBehaviour
         else
         {
             isOpen = false;
-            endPos = new Vector2(xSize, yInit);
+            endPos = new Vector2(-xSize, yInit);
         }
 
         _MovePanel = StartCoroutine(_Move(initPos, endPos));

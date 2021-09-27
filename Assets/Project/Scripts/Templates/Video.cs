@@ -129,6 +129,7 @@ public class Video : MonoBehaviour
         if (!videoPlayer.isLooping)
         {
             isPlaying = false;
+            VideoPlayerCtrl.instance.OnPause();
             if (onVideoFinishedCallback != null) onVideoFinishedCallback();
         }
     }
